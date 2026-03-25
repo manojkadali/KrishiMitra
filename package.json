@@ -1,0 +1,14 @@
+{
+    "name": "krishimitra-root",
+    "version": "1.0.0",
+    "description": "Root project for KrishiMitra to run all services concurrently",
+    "scripts": {
+        "install:all": "cd server && npm install && cd ../client && npm install",
+        "dev:server": "cd server && npm run dev",
+        "dev:client": "cd client && npm run dev",
+        "dev": "concurrently -c \"cyan,magenta\" -n \"SERVER,CLIENT\" \"npm run dev:server\" \"npm run dev:client\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    }
+}

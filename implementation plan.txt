@@ -1,0 +1,26 @@
+KrishiMitra - Smart Crop Advisory System
+Phase 1: Project Initialization & Authentication
+ Initialize Project Structure (Client, Server, ML Service)
+ Setup Git & Environment Variables
+ Backend: Setup Express, Database Connection (PostgreSQL), & Error Handling
+ Backend: Implement Authentication Module (Register, Login, JWT, Role-based Access)
+ Frontend: Setup React + Vite + Tailwind CSS
+ Frontend: Implement Auth Pages (Login, Register) & State Management
+ Verify Authentication Flow (End-to-End)
+Phase 2: Core Modules (Profiles, Weather, Advisory)
+ Backend: Implement Farmer Profile & Farm Management APIs
+ Backend: Implement Weather Module (OpenWeather API + Caching)
+ Backend: Implement Advisory Engine (Rule-based Logic)
+ Frontend: Build Farmer Dashboard & Farm Management Forms
+ Frontend: Display Weather & Advisory Information
+Phase 3: Advanced Features (ML, Market, Voice)
+ ML Service: Setup FastAPI & Load Pretrained Model
+ Backend: Integrate ML Service for Disease Detection
+ Backend: Implement Market Module (Agmarknet + Caching)
+ Frontend: Implement Disease Detection UI
+ Frontend: Implement Market Prices UI
+ Frontend: Add Multilingual Support (i18next) & Voice (Web Speech API)
+Phase 4: Polish & Deployment
+ Security Hardening (Rate Limiting, Helmet, Input Validation)
+ Final Testing (End-to-End, Manual Scenarios)
+ Deployment (Backend, ML, Frontend)

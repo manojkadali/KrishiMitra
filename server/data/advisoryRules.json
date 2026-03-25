@@ -1,0 +1,51 @@
+[
+    {
+        "id": "WHEAT_SOIL_001",
+        "category": "Soil Management",
+        "severity": "MEDIUM",
+        "condition": "farm.current_crop.toLowerCase() === 'wheat' && farm.soil_ph !== undefined && farm.soil_ph !== null && farm.soil_ph < 6",
+        "advisory": "Your soil is somewhat acidic for wheat. Consider applying agricultural lime to raise the pH to optimal levels (6.0 - 7.0).",
+        "source": "KrishiMitra Agronomy dataset",
+        "applies_to_stages": [
+            "all"
+        ]
+    },
+    {
+        "id": "RICE_PEST_001",
+        "category": "Pest Warning",
+        "severity": "HIGH",
+        "condition": "farm.current_crop.toLowerCase() === 'rice' && weather && weather.humidity > 80",
+        "advisory": "High humidity detected. There is an elevated risk for Rice Blast disease. Ensure proper water drainage and prepare preemptive fungicide if symptoms appear.",
+        "source": "Disease Prevention Guidelines",
+        "applies_to_stages": [
+            "tillering",
+            "flowering",
+            "all"
+        ]
+    },
+    {
+        "id": "COTTON_RAIN_001",
+        "category": "Weather Alert",
+        "severity": "CRITICAL",
+        "condition": "farm.current_crop.toLowerCase() === 'cotton' && weather && weather.forecastRainfall > 50",
+        "advisory": "Heavy rainfall forecast! Delay any pesticide application to prevent wash-off, and ensure field drainage channels are clear.",
+        "source": "Weather Operations",
+        "applies_to_stages": [
+            "all",
+            "flowering",
+            "boll formation"
+        ]
+    },
+    {
+        "id": "GENERAL_FERT_001",
+        "category": "General Advice",
+        "severity": "LOW",
+        "condition": "farm.area_acres < 5",
+        "advisory": "Since your farm area is small, consider high-density planting techniques to maximize yield per acre.",
+        "source": "Smallholder Farming Tips",
+        "applies_to_stages": [
+            "sowing",
+            "all"
+        ]
+    }
+]
