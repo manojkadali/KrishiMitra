@@ -83,11 +83,18 @@ const SimplifiedAdvisory = () => {
             const dataToSubmit = { ...formData };
             delete dataToSubmit.location;
 
-            const res = await axios.post('http://localhost:5000/api/advisories/simplified', dataToSubmit, {
-                headers: { 'Authorization': `Bearer ${token}` }
+            // Post to the FastAPI model endpoint
+            const res = await axios.post('http://127.0.0.1:8000/predict', {
+                N: Number(dataToSubmit.nitrogen),
+                P: Number(dataToSubmit.phosphorous),
+                K: Number(dataToSubmit.potassium),
+                temperature: Number(dataToSubmit.temperature),
+                humidity: Number(dataToSubmit.humidity),
+                ph: Number(dataToSubmit.ph),
+                rainfall: Number(dataToSubmit.rainfall)
             });
             setCurrentResult(res.data);
-            fetchHistory(); // refresh history list
+            // fetchHistory(); // History won't be updated by FastAPI, so omitting refresh 
         } catch (err) {
             setError(err.response?.data?.msg || err.response?.data?.errors?.[0]?.msg || 'Failed to generate advisory');
         } finally {
@@ -177,11 +184,18 @@ const SimplifiedAdvisory = () => {
                             <div className="space-y-4">
                                 <div className="bg-white bg-opacity-60 rounded-xl p-4">
                                     <p className="text-sm font-semibold text-green-700 uppercase tracking-wider mb-1">Recommended Crop</p>
-                                    <p className="text-2xl font-bold text-gray-800">{currentResult.crop_recommendation}</p>
+                                    <p className="text-2xl font-bold text-gray-800 capitalize">{currentResult.recommended_crop}</p>
                                 </div>
                                 <div className="bg-white bg-opacity-60 rounded-xl p-4">
-                                    <p className="text-sm font-semibold text-green-700 uppercase tracking-wider mb-1">Fertilizer & Care Advice</p>
-                                    <p className="text-lg text-gray-700">{currentResult.fertilizer_advice}</p>
+                                    <p className="text-sm font-semibold text-green-700 uppercase tracking-wider mb-1">Top 3 Predictions</p>
+                                    <div className="space-y-2 mt-2">
+                                        {currentResult.top_predictions && currentResult.top_predictions.map((pred, idx) => (
+                                            <div key={idx} className="flex justify-between items-center bg-gray-50 px-3 py-2 rounded">
+                                                <span className="font-semibold capitalize text-gray-700">{pred.crop}</span>
+                                                <span className="text-green-600 font-bold">{pred.confidence}%</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>

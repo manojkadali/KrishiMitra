@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 
 const pool = require('./config/db');
+const weatherScheduler = require('./services/weatherScheduler');
 
 const app = express();
 
@@ -46,4 +47,7 @@ app.listen(PORT, async () => {
     } catch (err) {
         console.error('DB connection error:', err.message);
     }
+    
+    // 👇 Start daily weather scheduler
+    weatherScheduler.startScheduler();
 });
