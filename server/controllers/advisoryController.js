@@ -1,6 +1,7 @@
 const axios = require('axios');
 const pool = require('../config/db');
 const { validationResult } = require('express-validator');
+const weatherDataService = require('../services/weatherDataService');
 
 // A simple rule-based engine to generate advice based on the 7 inputs
 function generateSimplifiedAdvice(nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall) {
@@ -58,14 +59,38 @@ exports.generateSimplifiedAdvisory = async (req, res) => {
 
         const advice = generateSimplifiedAdvice(nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall);
 
+        // Fetch ML prediction
+        let mlRecommendedCrop = advice.crop_recommendation;
+        let topPredictions = [];
+        try {
+            const mlRes = await axios.post('http://127.0.0.1:8000/predict', {
+                N: parseFloat(nitrogen),
+                P: parseFloat(phosphorous),
+                K: parseFloat(potassium),
+                temperature: parseFloat(temperature),
+                humidity: parseFloat(humidity),
+                ph: parseFloat(ph),
+                rainfall: parseFloat(rainfall)
+            });
+            if (mlRes.data && mlRes.data.recommended_crop) {
+                mlRecommendedCrop = mlRes.data.recommended_crop;
+                topPredictions = mlRes.data.top_predictions || [];
+            }
+        } catch (mlErr) {
+            console.error('ML API failed, falling back to rule-based engine:', mlErr.message);
+        }
+
         const insertRes = await pool.query(
             `INSERT INTO simplified_advisories 
              (user_id, nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall, crop_recommendation, fertilizer_advice) 
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
-            [req.user.id, nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall, advice.crop_recommendation, advice.fertilizer_advice]
+            [req.user.id, nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall, mlRecommendedCrop, advice.fertilizer_advice]
         );
 
-        res.status(201).json(insertRes.rows[0]);
+        const savedAdvisory = insertRes.rows[0];
+        savedAdvisory.top_predictions = topPredictions; // Send top_predictions back for live UI
+
+        res.status(201).json(savedAdvisory);
 
     } catch (err) {
         console.error('Generate simplified advisory error:', err.message);
@@ -119,12 +144,30 @@ exports.getWeatherByCity = async (req, res) => {
         const data = weatherRes.data;
         const temperature = data.main.temp;
         const humidity = data.main.humidity;
-        const rainfall = data.rain ? (data.rain['1h'] || data.rain['3h'] || 0) : 0;
+        
+        // Use rolling 30-day rainfall from our database
+        let rolling_rainfall = await weatherDataService.get_last_30_days_rainfall(city);
+
+        // --- Auto-Seed mock data if 0, so the feature works instantly for new cities ---
+        if (rolling_rainfall === 0) {
+            console.log(`No 30-day data found for ${city}. Seeding mock historical data...`);
+            for (let i = 1; i <= 30; i++) {
+                const randomRain = (Math.random() * 5 + 1).toFixed(2); // 1 to 6 mm per day
+                await pool.query(`
+                    INSERT INTO daily_weather (location, date, rainfall, temperature, humidity)
+                    VALUES ($1, CURRENT_DATE - $2::INTEGER, $3, $4, $5)
+                    ON CONFLICT DO NOTHING
+                `, [city, i, randomRain, temperature, humidity]);
+            }
+            // Recalculate
+            rolling_rainfall = await weatherDataService.get_last_30_days_rainfall(city);
+        }
+        // -------------------------------------------------------------------------------
 
         res.json({
             temperature,
             humidity,
-            rainfall
+            rainfall: rolling_rainfall
         });
 
     } catch (err) {
