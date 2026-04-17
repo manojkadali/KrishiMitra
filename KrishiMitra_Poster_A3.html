@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KrishiMitra - A3 Project Poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* A3 size: 297mm × 420mm (portrait) */
+  @page { size: A3 portrait; margin: 0; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .poster {
+    width: 297mm;
+    min-height: 420mm;
+    background: linear-gradient(160deg, #f8fdf5 0%, #e8f5e9 30%, #fff8e1 70%, #f1f8e9 100%);
+    padding: 12mm;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  }
+
+  /* Decorative background elements */
+  .poster::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(76,175,80,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .poster::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,193,7,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #388e3c 100%);
+    border-radius: 14px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 20px rgba(27,94,32,0.3);
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo-circle {
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .header h1 {
+    font-size: 30px; font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .header .tagline {
+    font-size: 12px; color: rgba(255,255,255,0.85);
+    font-weight: 400; margin-top: 2px;
+  }
+  .header-right {
+    text-align: right; color: #fff;
+  }
+  .header-right .subtitle {
+    font-size: 11px; font-weight: 500;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 12px; border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .header-right .langs {
+    font-size: 9px; color: rgba(255,255,255,0.7);
+  }
+
+  /* ─── SECTION STYLES ─── */
+  .section-title {
+    font-size: 13px; font-weight: 700;
+    color: #1b5e20;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 4px;
+  }
+  .section-title .icon { font-size: 16px; }
+
+  /* ─── GRID LAYOUT ─── */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(76,175,80,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Spanning cards */
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+  .span-row-2 { grid-row: span 2; }
+
+  /* ─── PROBLEM STATEMENT ─── */
+  .problem-box {
+    background: linear-gradient(135deg, #fff3e0, #fff8e1);
+    border-left: 4px solid #ff9800;
+  }
+  .problem-box p {
+    font-size: 10px; color: #555; line-height: 1.5;
+  }
+  .problem-list {
+    list-style: none; padding: 0; margin-top: 4px;
+  }
+  .problem-list li {
+    font-size: 9.5px; color: #666;
+    padding: 2px 0 2px 16px;
+    position: relative;
+  }
+  .problem-list li::before {
+    content: '⚠'; position: absolute; left: 0; font-size: 9px;
+  }
+
+  /* ─── FEATURES ─── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .feature-item {
+    display: flex; gap: 6px; align-items: flex-start;
+    padding: 5px 6px;
+    background: rgba(76,175,80,0.04);
+    border-radius: 6px;
+    border: 1px solid rgba(76,175,80,0.08);
+  }
+  .feature-icon {
+    font-size: 16px;
+    min-width: 22px; text-align: center;
+    padding-top: 1px;
+  }
+  .feature-name {
+    font-size: 9px; font-weight: 600; color: #2e7d32;
+    line-height: 1.2;
+  }
+  .feature-desc {
+    font-size: 8px; color: #777; line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  /* ─── SCREENSHOTS ─── */
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .screenshot-box {
+    background: #f5f5f5;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .screenshot-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  .screenshot-label {
+    font-size: 8px;
+    font-weight: 600;
+    color: #999;
+    text-align: center;
+    padding: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .screenshot-placeholder {
+    font-size: 24px;
+    opacity: 0.3;
+    margin-bottom: 2px;
+  }
+
+  .screenshot-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  /* ─── TECH STACK ─── */
+  .tech-categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .tech-cat {
+    background: rgba(33,150,243,0.04);
+    border-radius: 6px;
+    padding: 6px 8px;
+    border: 1px solid rgba(33,150,243,0.1);
+  }
+  .tech-cat-title {
+    font-size: 9px; font-weight: 700;
+    color: #1565c0;
+    margin-bottom: 3px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .tech-tag {
+    display: inline-block;
+    background: #e3f2fd;
+    color: #1565c0;
+    font-size: 7.5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin: 1px 2px 1px 0;
+  }
+  .tech-tag.green { background: #e8f5e9; color: #2e7d32; }
+  .tech-tag.orange { background: #fff3e0; color: #e65100; }
+  .tech-tag.purple { background: #f3e5f5; color: #7b1fa2; }
+  .tech-tag.red { background: #fce4ec; color: #c62828; }
+
+  /* ─── ARCHITECTURE ─── */
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 0;
+  }
+  .arch-box {
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    min-width: 70px;
+  }
+  .arch-box.frontend { background: linear-gradient(135deg, #e3f2fd, #bbdefb); border: 1px solid #90caf9; }
+  .arch-box.backend { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 1px solid #a5d6a7; }
+  .arch-box.ml { background: linear-gradient(135deg, #fff3e0, #ffe0b2); border: 1px solid #ffcc80; }
+  .arch-box.db { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 1px solid #ce93d8; }
+  .arch-box.api { background: linear-gradient(135deg, #fce4ec, #f8bbd0); border: 1px solid #f48fb1; }
+  .arch-box-icon { font-size: 18px; }
+  .arch-box-label { font-size: 8px; font-weight: 700; color: #333; margin-top: 2px; }
+  .arch-box-sub { font-size: 7px; color: #777; }
+  .arch-arrow { font-size: 16px; color: #aaa; }
+
+  /* ─── KEY HIGHLIGHTS ─── */
+  .highlight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+  }
+  .highlight-item {
+    text-align: center;
+    padding: 6px;
+    background: linear-gradient(135deg, rgba(76,175,80,0.06), rgba(76,175,80,0.02));
+    border-radius: 8px;
+    border: 1px solid rgba(76,175,80,0.12);
+  }
+  .highlight-num {
+    font-size: 20px; font-weight: 800;
+    color: #2e7d32;
+    line-height: 1;
+  }
+  .highlight-label {
+    font-size: 7.5px; color: #666;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    border-radius: 10px;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .footer-text {
+    font-size: 8px; color: rgba(255,255,255,0.8);
+  }
+  .footer-links {
+    display: flex; gap: 10px;
+  }
+  .footer-link {
+    font-size: 8px;
+    color: #fff;
+    font-weight: 600;
+    background: rgba(255,255,255,0.15);
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+
+  /* ─── USP BANNER ─── */
+  .usp-banner {
+    background: linear-gradient(135deg, #fff8e1, #fff3e0);
+    border: 1px solid rgba(255,152,0,0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .usp-banner .usp-icon {
+    font-size: 24px;
+  }
+  .usp-text {
+    font-size: 10px; font-weight: 500; color: #555;
+  }
+  .usp-text strong { color: #e65100; }
+
+  /* ─── DB SCHEMA ─── */
+  .db-tables {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .db-tag {
+    font-size: 7.5px;
+    background: #ede7f6;
+    color: #4527a0;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  /* ─── API ROUTES ─── */
+  .api-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .api-route {
+    font-size: 7.5px;
+    font-family: 'Courier New', monospace;
+    color: #c62828;
+    background: rgba(198,40,40,0.04);
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+
+  @media print {
+    body { background: none; padding: 0; }
+    .poster { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- ════════ HEADER ════════ -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-circle">🌾</div>
+      <div>
+        <h1>KrishiMitra</h1>
+        <div class="tagline">AI-Powered Smart Farming Assistant for Indian Farmers</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="subtitle">🤖 AI + IoT + Agriculture</div>
+      <div class="langs">🌍 English | हिन्दी | తెలుగు</div>
+    </div>
+  </div>
+
+  <!-- ════════ USP BANNER ════════ -->
+  <div class="usp-banner">
+    <div class="usp-icon">🎯</div>
+    <div class="usp-text">
+      A <strong>full-stack intelligent farming platform</strong> that combines real-time weather data, AI-based disease detection,
+      government market data & rule-based advisory systems to help <strong>Indian farmers</strong> make data-driven crop decisions.
+    </div>
+  </div>
+
+  <!-- ════════ MAIN CONTENT GRID ════════ -->
+  <div class="content-grid">
+
+    <!-- ── ROW 1: Problem + Key Features ── -->
+    <div class="card problem-box">
+      <div class="section-title"><span class="icon">❓</span> Problem Statement</div>
+      <p>Indian farmers face critical challenges:</p>
+      <ul class="problem-list">
+        <li>No data-driven guidance for crop selection</li>
+        <li>Late detection of plant diseases</li>
+        <li>Inefficient water & resource usage</li>
+        <li>No access to real-time market prices</li>
+        <li>Lack of early pest/disease warnings</li>
+        <li>Language barriers in tech tools</li>
+      </ul>
+    </div>
+
+    <div class="card span-2">
+      <div class="section-title"><span class="icon">⭐</span> Key Features (18 Modules)</div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🌱</div>
+          <div>
+            <div class="feature-name">AI Crop Recommendation</div>
+            <div class="feature-desc">Score-match 18 crops against soil NPK, pH & weather. Shows top 8 matches.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔬</div>
+          <div>
+            <div class="feature-name">AI Disease Detection</div>
+            <div class="feature-desc">Upload leaf photo → MobileNetV2 identifies 15 diseases across 3 crops.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💧</div>
+          <div>
+            <div class="feature-name">Smart Irrigation</div>
+            <div class="feature-desc">28-day watering schedule based on crop, soil & live weather data.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📊</div>
+          <div>
+            <div class="feature-name">Market Prices & Forecast</div>
+            <div class="feature-desc">Live mandi prices from 7,000+ mandis + 4-week price predictions.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🐛</div>
+          <div>
+            <div class="feature-name">Pest & Disease Alerts</div>
+            <div class="feature-desc">34 weather-based rules to identify pest risk with severity ranking.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📈</div>
+          <div>
+            <div class="feature-name">Yield Prediction</div>
+            <div class="feature-desc">Harvest estimates from soil, weather, irrigation & sowing season data.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🗺️</div>
+          <div>
+            <div class="feature-name">Interactive Farm Map</div>
+            <div class="feature-desc">Leaflet.js map with clickable farm popups & GPS coordinates.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🧪</div>
+          <div>
+            <div class="feature-name">Soil Lab Locator</div>
+            <div class="feature-desc">Find nearest soil testing labs via GPS with Haversine distance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 2: Architecture ── -->
+    <div class="card span-3">
+      <div class="section-title"><span class="icon">🏗️</span> System Architecture</div>
+      <div class="arch-flow">
+        <div class="arch-box frontend">
+          <div class="arch-box-icon">⚛️</div>
+          <div class="arch-box-label">Frontend</div>
+          <div class="arch-box-sub">React 19 + Vite</div>
+          <div class="arch-box-sub">Tailwind CSS</div>
+        </div>
+        <div class="arch-arrow">➜</div>
+        <div class="arch-box backend">
+          <div class="arch-box-icon">🟢</div>
+          <div class="arch-box-label">Backend API</div>
+          <div class="arch-box-sub">Node.js + Express 5</div>
+          <div class="arch-box-sub">JWT Auth</div>
+        </div>
+        <div class="arch-arrow">➜</div>
+        <div class="arch-box db">
+          <div class="arch-box-icon">🗄️</div>
+          <div class="arch-box-label">Database</div>
+          <div class="arch-box-sub">PostgreSQL</div>
+          <div class="arch-box-sub">10 Tables</div>
+        </div>
+        <div style="width: 30px;"></div>
+        <div class="arch-box backend">
+          <div class="arch-box-icon">🟢</div>
+          <div class="arch-box-label">Backend API</div>
+          <div class="arch-box-sub">25+ REST Endpoints</div>
+          <div class="arch-box-sub">9 Controllers</div>
+        </div>
+        <div class="arch-arrow">➜</div>
+        <div class="arch-box ml">
+          <div class="arch-box-icon">🧠</div>
+          <div class="arch-box-label">ML Service</div>
+          <div class="arch-box-sub">Python FastAPI</div>
+          <div class="arch-box-sub">TensorFlow</div>
+        </div>
+        <div style="width: 30px;"></div>
+        <div class="arch-box api">
+          <div class="arch-box-icon">🌐</div>
+          <div class="arch-box-label">External APIs</div>
+          <div class="arch-box-sub">OpenWeatherMap</div>
+          <div class="arch-box-sub">Agmarknet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 3: Screenshots (Top Row) ── -->
+    <div class="card span-3">
+      <div class="section-title"><span class="icon">📸</span> Application Screenshots</div>
+      <div class="screenshot-grid-3" style="margin-bottom: 6px;">
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🖥️</div>
+          <div class="screenshot-label">Dashboard</div>
+          <!-- Replace with: <img src="screenshots/dashboard.png" alt="Dashboard"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🌱</div>
+          <div class="screenshot-label">Crop Recommendation</div>
+          <!-- Replace with: <img src="screenshots/crop_recommend.png" alt="Crop Recommendation"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🔬</div>
+          <div class="screenshot-label">Disease Detection</div>
+          <!-- Replace with: <img src="screenshots/disease_detect.png" alt="Disease Detection"> -->
+        </div>
+      </div>
+      <div class="screenshot-grid-3">
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">💧</div>
+          <div class="screenshot-label">Irrigation Schedule</div>
+          <!-- Replace with: <img src="screenshots/irrigation.png" alt="Irrigation"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">📊</div>
+          <div class="screenshot-label">Market Prices</div>
+          <!-- Replace with: <img src="screenshots/market.png" alt="Market Prices"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🗺️</div>
+          <div class="screenshot-label">Farm Map</div>
+          <!-- Replace with: <img src="screenshots/farm_map.png" alt="Farm Map"> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 4: Tech Stack + Highlights + DB ── -->
+    <div class="card span-2">
+      <div class="section-title"><span class="icon">💻</span> Technology Stack</div>
+      <div class="tech-categories">
+        <div class="tech-cat">
+          <div class="tech-cat-title">⚛️ Frontend</div>
+          <span class="tech-tag">React 19</span>
+          <span class="tech-tag">Vite 7</span>
+          <span class="tech-tag">Tailwind CSS 4</span>
+          <span class="tech-tag">React Router 7</span>
+          <span class="tech-tag">Axios</span>
+          <span class="tech-tag">i18next</span>
+          <span class="tech-tag">Leaflet.js</span>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-title">🟢 Backend</div>
+          <span class="tech-tag green">Node.js 22</span>
+          <span class="tech-tag green">Express 5</span>
+          <span class="tech-tag green">JWT</span>
+          <span class="tech-tag green">Helmet</span>
+          <span class="tech-tag green">Multer</span>
+          <span class="tech-tag green">bcryptjs</span>
+          <span class="tech-tag green">Rate Limiter</span>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-title">🧠 ML / AI</div>
+          <span class="tech-tag orange">Python 3.12</span>
+          <span class="tech-tag orange">FastAPI</span>
+          <span class="tech-tag orange">TensorFlow</span>
+          <span class="tech-tag orange">MobileNetV2</span>
+          <span class="tech-tag orange">Pillow</span>
+          <span class="tech-tag orange">Docker</span>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-title">🗄️ Database & APIs</div>
+          <span class="tech-tag purple">PostgreSQL</span>
+          <span class="tech-tag purple">Supabase</span>
+          <span class="tech-tag red">OpenWeatherMap</span>
+          <span class="tech-tag red">Agmarknet</span>
+          <span class="tech-tag red">data.gov.in</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span class="icon">🔢</span> Key Metrics</div>
+      <div class="highlight-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="highlight-item">
+          <div class="highlight-num">18</div>
+          <div class="highlight-label">Feature Modules</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">25+</div>
+          <div class="highlight-label">API Endpoints</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">15</div>
+          <div class="highlight-label">Disease Classes</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">34</div>
+          <div class="highlight-label">Pest Alert Rules</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">10</div>
+          <div class="highlight-label">DB Tables</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">7K+</div>
+          <div class="highlight-label">Mandis Covered</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 5: Security + DB Schema + API Routes ── -->
+    <div class="card">
+      <div class="section-title"><span class="icon">🔐</span> Security Features</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> JWT Authentication (7-day tokens)
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> bcrypt Password Hashing (10 rounds)
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> Helmet Security Headers
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> Input Validation & Sanitization
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> API Rate Limiting
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> CORS Protection
+        </li>
+        <li style="font-size: 8.5px; padding: 2px 0; color: #555;">
+          <span style="color: #4caf50; font-weight: 700;">✓</span> File Upload Size Limits
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span class="icon">🗄️</span> Database Schema</div>
+      <div class="db-tables">
+        <span class="db-tag">users</span>
+        <span class="db-tag">farms</span>
+        <span class="db-tag">disease_reports</span>
+        <span class="db-tag">crop_recommendations</span>
+        <span class="db-tag">irrigation_schedules</span>
+        <span class="db-tag">pest_alerts</span>
+        <span class="db-tag">yield_predictions</span>
+        <span class="db-tag">market_prices</span>
+        <span class="db-tag">soil_lab_locations</span>
+        <span class="db-tag">advisories</span>
+      </div>
+      <p style="font-size: 7.5px; color: #888; margin-top: 5px;">
+        UUID primary keys • JSONB support • FK relationships to users table
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span class="icon">🔗</span> API Endpoints</div>
+      <div class="api-list">
+        <div class="api-route">/api/auth/*</div>
+        <div class="api-route">/api/farms/*</div>
+        <div class="api-route">/api/advisories/*</div>
+        <div class="api-route">/api/crop-recommend/*</div>
+        <div class="api-route">/api/irrigation/*</div>
+        <div class="api-route">/api/pest-alerts/*</div>
+        <div class="api-route">/api/yield/*</div>
+        <div class="api-route">/api/market/*</div>
+        <div class="api-route">/api/disease/*</div>
+        <div class="api-route">/api/soil-labs/*</div>
+      </div>
+    </div>
+
+    <!-- ── ROW 6: More Screenshots + Future Scope ── -->
+    <div class="card span-2">
+      <div class="section-title"><span class="icon">📸</span> More Screenshots</div>
+      <div class="screenshot-grid">
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🐛</div>
+          <div class="screenshot-label">Pest Alerts</div>
+          <!-- Replace with: <img src="screenshots/pest_alerts.png" alt="Pest Alerts"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">📈</div>
+          <div class="screenshot-label">Yield Prediction</div>
+          <!-- Replace with: <img src="screenshots/yield.png" alt="Yield Prediction"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">🧪</div>
+          <div class="screenshot-label">Soil Lab Locator</div>
+          <!-- Replace with: <img src="screenshots/soil_lab.png" alt="Soil Lab"> -->
+        </div>
+        <div class="screenshot-box">
+          <div class="screenshot-placeholder">📤</div>
+          <div class="screenshot-label">Reports & Export</div>
+          <!-- Replace with: <img src="screenshots/reports.png" alt="Reports"> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span class="icon">🚀</span> Future Scope</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> IoT sensor integration
+        </li>
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> Drone-based crop monitoring
+        </li>
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> Voice commands in regional languages
+        </li>
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> Mobile app (React Native)
+        </li>
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> Community marketplace for farmers
+        </li>
+        <li style="font-size: 8.5px; padding: 3px 0; color: #555;">
+          <span style="color: #ff9800;">▸</span> Govt. scheme auto-eligibility check
+        </li>
+      </ul>
+    </div>
+
+  </div><!-- end content-grid -->
+
+  <!-- ════════ FOOTER ════════ -->
+  <div class="footer">
+    <div class="footer-text">
+      © 2026 KrishiMitra — Built with ❤️ for Indian Farmers | React • Node.js • TensorFlow • PostgreSQL
+    </div>
+    <div class="footer-links">
+      <span class="footer-link">🌐 localhost:5173</span>
+      <span class="footer-link">⚙️ localhost:5000</span>
+      <span class="footer-link">🧠 localhost:8000</span>
+    </div>
+  </div>
+
+</div><!-- end poster -->
+</body>
+</html>
