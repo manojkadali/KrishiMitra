@@ -59,13 +59,3 @@ CREATE TABLE IF NOT EXISTS market_prices (
     UNIQUE(commodity, state, district, fetched_at)
 );
 
-CREATE TABLE IF NOT EXISTS daily_weather (
-    id SERIAL PRIMARY KEY,
-    location VARCHAR(255) NOT NULL,
-    date DATE NOT NULL,
-    rainfall NUMERIC,
-    temperature NUMERIC,
-    humidity NUMERIC,
-    api_failed BOOLEAN DEFAULT FALSE,
-    UNIQUE(location, date)
-);

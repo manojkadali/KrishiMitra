@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KrishiMitra – Complete Project Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --green: #065f46;
+    --green-light: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --text: #1a2e2a;
+    --muted: #4b6360;
+    --border: #d4ddd9;
+    --bg: #f8faf9;
+    --code-bg: #f1f5f4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 11pt;
+    background: white;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ── Cover Page ─────────────────────── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(160deg, #064e3b 0%, #065f46 40%, #047857 100%);
+    color: white;
+    page-break-after: always;
+    padding: 60px 40px;
+  }
+  .cover-logo { font-size: 64px; margin-bottom: 10px; }
+  .cover h1 { font-size: 42pt; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+  .cover .tagline { font-size: 16pt; opacity: 0.85; margin-bottom: 40px; font-weight: 500; }
+  .cover .doc-title {
+    font-size: 22pt; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-top: 2px solid rgba(255,255,255,0.3); border-bottom: 2px solid rgba(255,255,255,0.3);
+    padding: 16px 48px; margin-bottom: 40px;
+  }
+  .cover .meta { font-size: 11pt; opacity: 0.7; line-height: 2; }
+
+  /* ── Page Layout ────────────────────── */
+  .content { max-width: 820px; margin: 0 auto; padding: 40px 50px; }
+
+  h1 { font-size: 22pt; font-weight: 800; color: var(--green); margin: 40px 0 12px; letter-spacing: -0.5px; border-bottom: 3px solid var(--green); padding-bottom: 8px; page-break-after: avoid; }
+  h2 { font-size: 16pt; font-weight: 700; color: var(--green); margin: 32px 0 10px; page-break-after: avoid; }
+  h3 { font-size: 13pt; font-weight: 700; color: var(--text); margin: 24px 0 8px; page-break-after: avoid; }
+  h4 { font-size: 11pt; font-weight: 700; color: var(--muted); margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  p { margin-bottom: 10px; }
+  ul, ol { padding-left: 24px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+
+  a { color: var(--green-light); text-decoration: none; }
+
+  /* ── Tables ──────────────────────────── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 10pt; page-break-inside: auto; }
+  thead { background: var(--green); color: white; }
+  th { padding: 8px 10px; text-align: left; font-weight: 600; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.3px; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--bg); }
+  tr { page-break-inside: avoid; }
+
+  /* ── Code ────────────────────────────── */
+  code { font-family: 'Fira Code', monospace; font-size: 9.5pt; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; color: #b91c1c; }
+  pre { background: #1a2e2a; color: #d1fae5; padding: 16px 20px; border-radius: 10px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 9pt; line-height: 1.6; margin: 12px 0 20px; page-break-inside: avoid; }
+  pre code { background: none; color: inherit; padding: 0; }
+
+  /* ── Info Boxes ──────────────────────── */
+  .box { padding: 14px 18px; border-radius: 10px; margin: 14px 0 20px; border-left: 4px solid; font-size: 10.5pt; page-break-inside: avoid; }
+  .box-info { background: #eff6ff; border-color: #3b82f6; }
+  .box-warn { background: #fffbeb; border-color: var(--amber); }
+  .box-success { background: var(--green-bg); border-color: var(--green-light); }
+  .box-title { font-weight: 700; margin-bottom: 4px; }
+
+  /* ── Badges ──────────────────────────── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 8.5pt; font-weight: 600; }
+  .badge-get { background: #dbeafe; color: #1e40af; }
+  .badge-post { background: #d1fae5; color: #065f46; }
+  .badge-delete { background: #fee2e2; color: #991b1b; }
+  .badge-put { background: #fef3c7; color: #92400e; }
+
+  /* ── Flow Diagrams ──────────────────── */
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 20px; font-size: 10pt; }
+  .flow-step { background: var(--green-bg); border: 1px solid #a7f3d0; padding: 6px 14px; border-radius: 8px; font-weight: 600; color: var(--green); white-space: nowrap; }
+  .flow-arrow { color: var(--green-light); font-weight: 700; font-size: 16pt; }
+
+  /* ── Table of Contents ──────────────── */
+  .toc { page-break-after: always; }
+  .toc h1 { text-align: center; border: none; }
+  .toc-list { list-style: none; padding: 0; margin-top: 20px; }
+  .toc-list li { padding: 6px 0; border-bottom: 1px dotted var(--border); }
+  .toc-list li a { color: var(--text); font-weight: 500; }
+  .toc-list .toc-h1 { font-weight: 700; font-size: 12pt; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .toc-list .toc-h2 { padding-left: 20px; font-size: 10.5pt; }
+  .toc-num { color: var(--green); font-weight: 700; margin-right: 8px; }
+
+  /* ── Architecture Diagram ───────────── */
+  .arch-box { border: 2px solid var(--border); border-radius: 12px; padding: 24px; margin: 16px 0 24px; background: var(--bg); text-align: center; font-size: 10pt; page-break-inside: avoid; }
+  .arch-row { display: flex; justify-content: center; gap: 16px; margin: 12px 0; flex-wrap: wrap; }
+  .arch-item { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 18px; min-width: 140px; }
+  .arch-item.green { border-color: var(--green-light); background: var(--green-bg); }
+  .arch-item.amber { border-color: var(--amber); background: #fffbeb; }
+  .arch-item.blue { border-color: #3b82f6; background: #eff6ff; }
+  .arch-label { font-weight: 700; font-size: 10pt; }
+  .arch-sub { font-size: 8.5pt; color: var(--muted); margin-top: 2px; }
+  .arch-connector { font-size: 20pt; color: var(--green-light); }
+
+  @media print {
+    .content { padding: 20px 40px; }
+    h1 { margin-top: 30px; }
+    .cover { min-height: 100vh; }
+    pre { font-size: 8pt; }
+  }
+
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- ════════════ COVER PAGE ════════════ -->
+<div class="cover">
+  <div class="cover-logo">🌾</div>
+  <h1>KrishiMitra</h1>
+  <div class="tagline">AI-Powered Smart Farming Platform for Indian Agriculture</div>
+  <div class="doc-title">Complete Project Documentation</div>
+  <div class="meta">
+    Full-Stack Web Application<br>
+    React · Express · PostgreSQL · FastAPI · TensorFlow<br><br>
+    Version 1.0 &nbsp;|&nbsp; April 2026
+  </div>
+</div>
+
+<!-- ════════════ TABLE OF CONTENTS ════════════ -->
+<div class="content toc">
+  <h1>Table of Contents</h1>
+  <ol class="toc-list">
+    <li class="toc-h1"><span class="toc-num">1</span><a href="#intro">Introduction & Project Overview</a></li>
+    <li class="toc-h2"><span class="toc-num">1.1</span><a href="#what">What is KrishiMitra?</a></li>
+    <li class="toc-h2"><span class="toc-num">1.2</span><a href="#features">Complete Feature List</a></li>
+    <li class="toc-h2"><span class="toc-num">1.3</span><a href="#techstack">Technology Stack</a></li>
+
+    <li class="toc-h1"><span class="toc-num">2</span><a href="#architecture">System Architecture</a></li>
+    <li class="toc-h2"><span class="toc-num">2.1</span><a href="#arch-overview">High-Level Architecture Diagram</a></li>
+    <li class="toc-h2"><span class="toc-num">2.2</span><a href="#folder">Folder Structure</a></li>
+
+    <li class="toc-h1"><span class="toc-num">3</span><a href="#setup">Setup & Installation Guide</a></li>
+    <li class="toc-h2"><span class="toc-num">3.1</span><a href="#prereqs">Prerequisites</a></li>
+    <li class="toc-h2"><span class="toc-num">3.2</span><a href="#env">Environment Variables</a></li>
+    <li class="toc-h2"><span class="toc-num">3.3</span><a href="#db-setup">Database Setup</a></li>
+    <li class="toc-h2"><span class="toc-num">3.4</span><a href="#backend-setup">Backend Server Setup</a></li>
+    <li class="toc-h2"><span class="toc-num">3.5</span><a href="#frontend-setup">Frontend Setup</a></li>
+    <li class="toc-h2"><span class="toc-num">3.6</span><a href="#ml-setup">ML Service Setup</a></li>
+
+    <li class="toc-h1"><span class="toc-num">4</span><a href="#database">Database Design</a></li>
+    <li class="toc-h2"><span class="toc-num">4.1</span><a href="#db-tables">All Tables & Columns</a></li>
+    <li class="toc-h2"><span class="toc-num">4.2</span><a href="#db-relations">Relationships</a></li>
+
+    <li class="toc-h1"><span class="toc-num">5</span><a href="#backend">Backend (Express Server)</a></li>
+    <li class="toc-h2"><span class="toc-num">5.1</span><a href="#server-config">Server Configuration</a></li>
+    <li class="toc-h2"><span class="toc-num">5.2</span><a href="#auth-system">Authentication System</a></li>
+    <li class="toc-h2"><span class="toc-num">5.3</span><a href="#api-reference">Complete API Reference</a></li>
+    <li class="toc-h2"><span class="toc-num">5.4</span><a href="#services">Backend Services & Business Logic</a></li>
+
+    <li class="toc-h1"><span class="toc-num">6</span><a href="#frontend">Frontend (React App)</a></li>
+    <li class="toc-h2"><span class="toc-num">6.1</span><a href="#frontend-arch">App Architecture & Routing</a></li>
+    <li class="toc-h2"><span class="toc-num">6.2</span><a href="#design-system">Design System</a></li>
+    <li class="toc-h2"><span class="toc-num">6.3</span><a href="#pages-detail">Page-by-Page Breakdown</a></li>
+    <li class="toc-h2"><span class="toc-num">6.4</span><a href="#i18n">Internationalization (i18n)</a></li>
+
+    <li class="toc-h1"><span class="toc-num">7</span><a href="#ml">ML Service (Disease Detection)</a></li>
+
+    <li class="toc-h1"><span class="toc-num">8</span><a href="#external">External APIs Used</a></li>
+
+    <li class="toc-h1"><span class="toc-num">9</span><a href="#dataflow">Data Flow Diagrams</a></li>
+
+    <li class="toc-h1"><span class="toc-num">10</span><a href="#security">Security & Best Practices</a></li>
+
+    <li class="toc-h1"><span class="toc-num">11</span><a href="#deployment">Deployment Guide</a></li>
+  </ol>
+</div>
+
+<!-- ════════════ CHAPTER 1 ════════════ -->
+<div class="content">
+<h1 id="intro">1. Introduction & Project Overview</h1>
+
+<h2 id="what">1.1 What is KrishiMitra?</h2>
+<p><strong>KrishiMitra</strong> (meaning "Farmer's Friend" in Hindi) is a full-stack AI-powered smart farming web application designed specifically for Indian farmers. It integrates real-time weather data, AI-based disease detection, government agricultural market data, and rule-based advisory systems to help farmers make better decisions about their crops.</p>
+
+<p>The platform solves these key problems:</p>
+<ul>
+  <li><strong>What crop should I grow?</strong> — AI crop recommendation based on soil NPK, pH, weather</li>
+  <li><strong>Is my crop sick?</strong> — Upload a leaf photo and get instant AI disease diagnosis</li>
+  <li><strong>When should I water?</strong> — Smart irrigation scheduling with weather awareness</li>
+  <li><strong>When to sell?</strong> — Live market prices + 4-week price forecasts</li>
+  <li><strong>Are pests coming?</strong> — Weather-based pest and disease early warnings</li>
+  <li><strong>How much will I harvest?</strong> — Yield prediction based on farm conditions</li>
+</ul>
+
+<div class="box box-success">
+  <div class="box-title">Who This Documentation Is For</div>
+  This documentation is written for anyone new to full-stack web development. Every concept, file, and decision is explained from the ground up. If you understand basic HTML, CSS, and JavaScript, you can follow along and implement this entire project.
+</div>
+
+<h2 id="features">1.2 Complete Feature List</h2>
+<table>
+  <thead><tr><th>#</th><th>Feature</th><th>What It Does</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>User Authentication</td><td>Register/login with email & password. JWT-based session management.</td></tr>
+    <tr><td>2</td><td>Farm Management (CRUD)</td><td>Add, view, delete farms with details like crop, soil type, irrigation, GPS coordinates.</td></tr>
+    <tr><td>3</td><td>Crop & Fertilizer Advisory</td><td>Enter soil NPK + pH values → get crop recommendation and fertilizer guidance.</td></tr>
+    <tr><td>4</td><td>Crop Recommendation Engine</td><td>Score-match 18 crops against soil nutrients, weather, and pH. Shows top 8 matches.</td></tr>
+    <tr><td>5</td><td>AI Disease Detection</td><td>Upload a leaf photo → TensorFlow MobileNetV2 model identifies 15 diseases across 3 crop types.</td></tr>
+    <tr><td>6</td><td>Disease Detection History</td><td>View all past disease analyses with confidence scores and treatments.</td></tr>
+    <tr><td>7</td><td>Smart Irrigation Scheduler</td><td>Generates a 28-day watering schedule based on crop, soil, growth stage, and live weather.</td></tr>
+    <tr><td>8</td><td>Pest & Disease Alerts</td><td>34 weather-based rules scan farm conditions for pest/disease risk. Severity-ranked alerts.</td></tr>
+    <tr><td>9</td><td>Yield Prediction</td><td>Estimates harvest quantity based on soil, irrigation, weather, and sowing season.</td></tr>
+    <tr><td>10</td><td>Live Market Prices</td><td>Search real-time commodity prices from India's Agmarknet (7,000+ mandis).</td></tr>
+    <tr><td>11</td><td>Price Forecast & Trends</td><td>4-week price prediction with sell/hold recommendation using moving averages.</td></tr>
+    <tr><td>12</td><td>Interactive Farm Map</td><td>Visualize all farms on a Leaflet.js map with popups showing farm details.</td></tr>
+    <tr><td>13</td><td>Reports & Export</td><td>Download farm data, advisories, disease reports, yield predictions as PDF/CSV.</td></tr>
+    <tr><td>14</td><td>Soil Test Lab Locator</td><td>Find nearest soil testing labs using GPS or state/district search. 35 real Indian labs.</td></tr>
+    <tr><td>15</td><td>Government Schemes</td><td>Dashboard widget showing active agricultural schemes with apply links.</td></tr>
+    <tr><td>16</td><td>Multi-language Support</td><td>Full UI translation in English, Hindi (हिन्दी), and Telugu (తెలుగు).</td></tr>
+    <tr><td>17</td><td>Responsive Design</td><td>Works on desktop, tablet, and mobile with sidebar/header layout.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="techstack">1.3 Technology Stack</h2>
+<table>
+  <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Why This Choice</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="6"><strong>Frontend</strong></td><td>React</td><td>19.2</td><td>Component-based UI library. Most popular for SPAs.</td></tr>
+    <tr><td>Vite</td><td>7.3</td><td>Lightning-fast build tool. Replaces Create React App.</td></tr>
+    <tr><td>Tailwind CSS</td><td>4.2</td><td>Utility-first CSS. Rapid styling without separate CSS files.</td></tr>
+    <tr><td>React Router</td><td>7.13</td><td>Client-side routing for single-page application navigation.</td></tr>
+    <tr><td>Axios</td><td>1.13</td><td>HTTP client with interceptors for auth token management.</td></tr>
+    <tr><td>i18next</td><td>25.8</td><td>Internationalization framework for multi-language support.</td></tr>
+    <tr><td rowspan="7"><strong>Backend</strong></td><td>Node.js</td><td>22.x</td><td>JavaScript runtime. Same language as frontend.</td></tr>
+    <tr><td>Express</td><td>5.2</td><td>Minimal, flexible web framework for building REST APIs.</td></tr>
+    <tr><td>PostgreSQL</td><td>—</td><td>Robust relational database. Supports JSONB for flexible data.</td></tr>
+    <tr><td>JSON Web Tokens</td><td>9.0</td><td>Stateless authentication. No server sessions needed.</td></tr>
+    <tr><td>bcryptjs</td><td>3.0</td><td>Password hashing. Never store passwords in plain text.</td></tr>
+    <tr><td>Helmet</td><td>8.1</td><td>Security HTTP headers (XSS protection, content policy, etc.).</td></tr>
+    <tr><td>Multer</td><td>2.0</td><td>File upload handling for disease detection images.</td></tr>
+    <tr><td rowspan="4"><strong>ML Service</strong></td><td>Python / FastAPI</td><td>3.12</td><td>High-performance async API framework. Auto-generates docs.</td></tr>
+    <tr><td>TensorFlow</td><td>2.x</td><td>Deep learning framework. Loads the Keras disease model.</td></tr>
+    <tr><td>MobileNetV2</td><td>—</td><td>Lightweight CNN architecture. Good accuracy with small model size.</td></tr>
+    <tr><td>Docker</td><td>—</td><td>Containerization for consistent deployment of the ML service.</td></tr>
+    <tr><td><strong>Database Host</strong></td><td>Supabase</td><td>—</td><td>Free PostgreSQL hosting with connection pooling.</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════ CHAPTER 2 ════════════ -->
+<h1 id="architecture" class="page-break">2. System Architecture</h1>
+
+<h2 id="arch-overview">2.1 High-Level Architecture Diagram</h2>
+
+<div class="arch-box">
+  <div style="font-weight:700; font-size:12pt; margin-bottom:16px;">Three-Tier Architecture</div>
+
+  <div class="arch-row">
+    <div class="arch-item green" style="min-width:400px;">
+      <div class="arch-label">🖥️ Frontend (React + Vite)</div>
+      <div class="arch-sub">Port 5173 • React 19 • Tailwind CSS 4 • i18next</div>
+      <div class="arch-sub">17 Pages • Sidebar Navigation • Glass-card Design System</div>
+    </div>
+  </div>
+
+  <div class="arch-connector">⬇ HTTP / Axios (JWT Bearer Token) ⬇</div>
+
+  <div class="arch-row">
+    <div class="arch-item blue" style="min-width:400px;">
+      <div class="arch-label">⚙️ Backend API (Express 5)</div>
+      <div class="arch-sub">Port 5000 • 10 Route Groups • 25+ Endpoints</div>
+      <div class="arch-sub">JWT Auth • Rate Limiting • Helmet Security Headers</div>
+    </div>
+  </div>
+
+  <div class="arch-row">
+    <div class="arch-connector">⬇ pg Pool ⬇</div>
+    <div class="arch-connector" style="margin-left:40px;">⬇ Axios Proxy ⬇</div>
+    <div class="arch-connector" style="margin-left:40px;">⬇ Axios ⬇</div>
+  </div>
+
+  <div class="arch-row">
+    <div class="arch-item">
+      <div class="arch-label">🗄️ PostgreSQL</div>
+      <div class="arch-sub">Supabase (Cloud)</div>
+      <div class="arch-sub">10 Tables • UUID PKs</div>
+    </div>
+    <div class="arch-item amber">
+      <div class="arch-label">🤖 ML Service (FastAPI)</div>
+      <div class="arch-sub">Port 8000 • TensorFlow</div>
+      <div class="arch-sub">MobileNetV2 • 15 Classes</div>
+    </div>
+    <div class="arch-item">
+      <div class="arch-label">🌐 External APIs</div>
+      <div class="arch-sub">OpenWeatherMap</div>
+      <div class="arch-sub">Agmarknet (data.gov.in)</div>
+    </div>
+  </div>
+</div>
+
+<div class="box box-info">
+  <div class="box-title">How It All Connects</div>
+  <p>The <strong>React frontend</strong> runs in the user's browser and communicates with the <strong>Express backend</strong> via REST API calls using Axios. The backend handles authentication, business logic, and database operations. For disease detection, the backend proxies image uploads to the <strong>Python ML service</strong>. For weather data and market prices, the backend calls <strong>external APIs</strong> (OpenWeatherMap and Agmarknet).</p>
+</div>
+
+<h2 id="folder">2.2 Folder Structure</h2>
+<pre><code>KrishiMitra/
+├── client/                          # React Frontend
+│   ├── public/                      # Static files
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── axiosInstance.js     # Configured Axios with auth interceptor
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx           # Sidebar + header navigation
+│   │   │   ├── FarmForm.jsx         # Add farm form component
+│   │   │   ├── FarmList.jsx         # Farm cards display component
+│   │   │   └── GovernmentSchemes.jsx # Government schemes widget
+│   │   ├── data/
+│   │   │   └── locations.json       # Indian states/districts for dropdowns
+│   │   ├── pages/
+│   │   │   ├── Login.jsx            # Login page with hero panel
+│   │   │   ├── Register.jsx         # Registration page
+│   │   │   ├── Dashboard.jsx        # Main dashboard with feature cards
+│   │   │   ├── Farms.jsx            # Farm CRUD management
+│   │   │   ├── SimplifiedAdvisory.jsx # Crop & fertilizer advisory
+│   │   │   ├── CropRecommendation.jsx # AI crop suggestions
+│   │   │   ├── DiseaseDetection.jsx # Leaf image upload & AI analysis
+│   │   │   ├── DiseaseHistory.jsx   # Past detection records
+│   │   │   ├── IrrigationScheduler.jsx # Smart watering schedule
+│   │   │   ├── PestAlerts.jsx       # Weather-based pest warnings
+│   │   │   ├── YieldPrediction.jsx  # Harvest yield estimates
+│   │   │   ├── MarketPrices.jsx     # Live Agmarknet prices
+│   │   │   ├── PriceForecast.jsx    # 4-week price trends
+│   │   │   ├── FarmMap.jsx          # Interactive Leaflet map
+│   │   │   ├── ReportExport.jsx     # PDF/CSV data export
+│   │   │   ├── SoilLabLocator.jsx   # Find nearby soil labs
+│   │   │   └── Roadmap.jsx          # Platform roadmap & vision
+│   │   ├── App.jsx                  # Root component with routing
+│   │   ├── App.css                  # (empty — styles are in index.css)
+│   │   ├── index.css                # Complete design system
+│   │   ├── i18n.js                  # Translation config (EN/HI/TE)
+│   │   └── main.jsx                 # React entry point
+│   ├── index.html                   # HTML shell
+│   ├── package.json                 # Frontend dependencies
+│   ├── vite.config.js               # Vite configuration
+│   ├── tailwind.config.js           # Tailwind configuration
+│   └── postcss.config.js            # PostCSS configuration
+│
+├── server/                          # Express Backend
+│   ├── config/
+│   │   └── db.js                    # PostgreSQL pool configuration
+│   ├── controllers/
+│   │   ├── authController.js        # Register & login logic
+│   │   ├── farmController.js        # Farm CRUD operations
+│   │   └── advisoryController.js    # Simplified advisory + weather endpoint
+│   ├── data/
+│   │   └── advisoryRules.json       # Rule-based advisory conditions
+│   ├── middleware/
+│   │   └── authMiddleware.js        # JWT verification middleware
+│   ├── models/
+│   │   └── db.sql                   # Database schema (CREATE TABLE statements)
+│   ├── routes/
+│   │   ├── authRoutes.js            # /api/auth/*
+│   │   ├── farmRoutes.js            # /api/farms/*
+│   │   ├── advisoryRoutes.js        # /api/advisories/*
+│   │   ├── marketRoutes.js          # /api/market/*
+│   │   └── mlRoutes.js              # /api/disease/*
+│   ├── services/
+│   │   ├── advisoryEngine.js        # Rule evaluation engine
+│   │   ├── weatherService.js        # OpenWeatherMap integration
+│   │   ├── cropRecommendation.js    # Crop scoring algorithm
+│   │   ├── irrigationScheduler.js   # 28-day schedule generator
+│   │   ├── pestAlertService.js      # 34-rule pest warning system
+│   │   ├── yieldPredictor.js        # Yield estimation engine
+│   │   ├── priceForecaster.js       # Moving average forecaster
+│   │   └── soilLabLocator.js        # Lab search with GPS/Haversine
+│   ├── index.js                     # Server entry point
+│   ├── package.json                 # Backend dependencies
+│   └── .env                         # Environment variables (not in git)
+│
+└── ml_service/                      # Python ML Service
+    ├── model/
+    │   ├── plant_disease_model.h5   # Trained TensorFlow model (~25MB)
+    │   └── class_names.json         # 15 disease class labels
+    ├── main.py                      # FastAPI server with /predict endpoint
+    ├── requirements.txt             # Python dependencies
+    └── Dockerfile                   # Container configuration</code></pre>
+
+<!-- ════════════ CHAPTER 3 ════════════ -->
+<h1 id="setup" class="page-break">3. Setup & Installation Guide</h1>
+
+<p>This section walks you through setting up the entire project from scratch on your local machine.</p>
+
+<h2 id="prereqs">3.1 Prerequisites</h2>
+<p>Install these tools before starting:</p>
+<table>
+  <thead><tr><th>Tool</th><th>Minimum Version</th><th>Download From</th><th>What It's For</th></tr></thead>
+  <tbody>
+    <tr><td>Node.js</td><td>20.19+</td><td>nodejs.org</td><td>Runs the backend server and frontend build tool</td></tr>
+    <tr><td>npm</td><td>10+</td><td>(comes with Node.js)</td><td>Package manager for JavaScript dependencies</td></tr>
+    <tr><td>Python</td><td>3.10+</td><td>python.org</td><td>Runs the ML disease detection service</td></tr>
+    <tr><td>pip</td><td>—</td><td>(comes with Python)</td><td>Package manager for Python dependencies</td></tr>
+    <tr><td>Git</td><td>2.x</td><td>git-scm.com</td><td>Version control and cloning the repository</td></tr>
+    <tr><td>PostgreSQL</td><td>14+</td><td>Supabase.com (free)</td><td>The database. You can use a cloud-hosted instance.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="env">3.2 Environment Variables</h2>
+<p>Create a file named <code>.env</code> inside the <code>server/</code> folder with these variables:</p>
+<pre><code># server/.env
+
+# Server port (optional, defaults to 5000)
+PORT=5000
+
+# PostgreSQL connection string (REQUIRED)
+# Get this from Supabase → Project Settings → Database → Connection String
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.YOUR_PROJECT.supabase.co:5432/postgres
+
+# Secret key for signing JWT tokens (REQUIRED for security)
+# Use any long random string. Example: openssl rand -hex 32
+JWT_SECRET=your_super_secret_random_string_here
+
+# OpenWeatherMap API key (REQUIRED for weather features)
+# Sign up free at openweathermap.org/api
+OPENWEATHER_API_KEY=your_openweather_api_key
+
+# ML Service URL (optional, defaults to http://127.0.0.1:8000)
+ML_SERVICE_URL=http://127.0.0.1:8000
+
+# Agmarknet API key (optional, has a fallback)
+# Get from data.gov.in
+AGMARKNET_API_KEY=your_agmarknet_api_key</code></pre>
+
+<div class="box box-warn">
+  <div class="box-title">Important: Never Commit .env Files</div>
+  The <code>.env</code> file contains sensitive credentials (database password, API keys). It should be listed in <code>.gitignore</code> and never pushed to GitHub.
+</div>
+
+<h2 id="db-setup">3.3 Database Setup</h2>
+
+<h3>Option A: Using Supabase (Recommended — Free)</h3>
+<ol>
+  <li>Go to <a href="https://supabase.com">supabase.com</a> and create a free account</li>
+  <li>Click "New Project" → give it a name and password</li>
+  <li>Once created, go to <strong>SQL Editor</strong></li>
+  <li>Copy the entire contents of <code>server/models/db.sql</code> and paste it into the SQL editor</li>
+  <li>Click "Run" — this creates all the base tables (users, farms, advisories, disease_reports, market_prices)</li>
+  <li>Then run the Phase 1 migration SQL to create the additional tables (crop_recommendations, irrigation_schedules, pest_alerts, yield_predictions, etc.)</li>
+  <li>Go to <strong>Settings → Database → Connection String</strong> and copy the URI. Put it in your <code>.env</code> as <code>DATABASE_URL</code></li>
+</ol>
+
+<h3>Option B: Local PostgreSQL</h3>
+<ol>
+  <li>Install PostgreSQL from postgresql.org</li>
+  <li>Open pgAdmin or psql terminal</li>
+  <li>Create a database: <code>CREATE DATABASE krishimitra;</code></li>
+  <li>Run the SQL files listed above</li>
+  <li>Set <code>DATABASE_URL=postgresql://postgres:password@localhost:5432/krishimitra</code></li>
+</ol>
+
+<h2 id="backend-setup">3.4 Backend Server Setup</h2>
+<pre><code># 1. Navigate to the server folder
+cd KrishiMitra/server
+
+# 2. Install all Node.js dependencies
+npm install
+
+# 3. Make sure your .env file is in place (see section 3.2)
+
+# 4. Start the development server (with auto-restart on file changes)
+npm run dev
+
+# You should see:
+# Server running on port 5000
+# DB connected: [timestamp]</code></pre>
+
+<div class="box box-info">
+  <div class="box-title">What <code>npm install</code> Does</div>
+  It reads <code>package.json</code>, downloads all listed dependencies (Express, pg, bcryptjs, etc.) into a <code>node_modules/</code> folder. You only need to run this once (or after adding new dependencies).
+</div>
+
+<h2 id="frontend-setup">3.5 Frontend Setup</h2>
+<pre><code># 1. Navigate to the client folder
+cd KrishiMitra/client
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the Vite development server
+npm run dev
+
+# You should see:
+# VITE v7.3.1  ready in 300ms
+# ➜ Local: http://localhost:5173/</code></pre>
+
+<p>The frontend connects to the backend at <code>http://localhost:5000</code> by default (configured in <code>axiosInstance.js</code>). If your backend runs on a different port, create a <code>client/.env</code> file:</p>
+<pre><code># client/.env (optional)
+VITE_API_URL=http://localhost:5000</code></pre>
+
+<h2 id="ml-setup">3.6 ML Service Setup</h2>
+<pre><code># 1. Navigate to the ML service folder
+cd KrishiMitra/ml_service
+
+# 2. Create a Python virtual environment (recommended)
+python -m venv venv
+
+# 3. Activate the virtual environment
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# 4. Install Python dependencies
+pip install -r requirements.txt
+
+# 5. Start the FastAPI server
+python main.py
+
+# You should see:
+# Loading Custom Keras Model...
+# Model loaded successfully.
+# Loaded 15 classes.
+# Uvicorn running on http://0.0.0.0:8000</code></pre>
+
+<div class="box box-warn">
+  <div class="box-title">TensorFlow Installation Note</div>
+  TensorFlow is a large package (~500MB). The first install may take several minutes. If you have a GPU, install <code>tensorflow-gpu</code> for faster inference. On Apple Silicon Macs, use <code>tensorflow-macos</code>.
+</div>
+
+<!-- ════════════ CHAPTER 4 ════════════ -->
+<h1 id="database" class="page-break">4. Database Design</h1>
+
+<h2 id="db-tables">4.1 All Tables & Columns</h2>
+
+<h3>users</h3>
+<p>Stores registered user accounts.</p>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>UUID</td><td>PRIMARY KEY, auto-generated</td><td>Unique user identifier</td></tr>
+    <tr><td><code>name</code></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>User's display name</td></tr>
+    <tr><td><code>email</code></td><td>VARCHAR(255)</td><td>UNIQUE, NOT NULL</td><td>Login email (must be unique)</td></tr>
+    <tr><td><code>password_hash</code></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>bcrypt-hashed password (never plain text)</td></tr>
+    <tr><td><code>role</code></td><td>VARCHAR(50)</td><td>DEFAULT 'farmer'</td><td>Either 'farmer' or 'admin'</td></tr>
+    <tr><td><code>created_at</code></td><td>TIMESTAMPTZ</td><td>DEFAULT now()</td><td>Registration timestamp</td></tr>
+  </tbody>
+</table>
+
+<h3>farms</h3>
+<p>Stores farm registrations with crop, soil, location, and irrigation details.</p>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Constraints</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>UUID</td><td>PRIMARY KEY</td><td>Unique farm identifier</td></tr>
+    <tr><td><code>user_id</code></td><td>UUID</td><td>FK → users(id) CASCADE</td><td>Owner of this farm</td></tr>
+    <tr><td><code>farm_name</code></td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the farm</td></tr>
+    <tr><td><code>area_acres</code></td><td>NUMERIC</td><td>CHECK > 0</td><td>Farm area in acres</td></tr>
+    <tr><td><code>soil_type</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Alluvial, Black, Red, Sandy, Loamy, Clay, Laterite</td></tr>
+    <tr><td><code>current_crop</code></td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Currently planted crop</td></tr>
+    <tr><td><code>soil_ph</code></td><td>NUMERIC</td><td>CHECK 3.0–9.0</td><td>Soil pH level</td></tr>
+    <tr><td><code>irrigation_type</code></td><td>VARCHAR(100)</td><td>nullable</td><td>Drip, Sprinkler, Flood, Canal, Rainfed</td></tr>
+    <tr><td><code>sowing_date</code></td><td>DATE</td><td>nullable</td><td>When the crop was sown</td></tr>
+    <tr><td><code>previous_crop</code></td><td>VARCHAR(100)</td><td>nullable</td><td>Last season's crop (for rotation analysis)</td></tr>
+    <tr><td><code>latitude</code></td><td>NUMERIC</td><td>nullable</td><td>GPS latitude (for map & weather)</td></tr>
+    <tr><td><code>longitude</code></td><td>NUMERIC</td><td>nullable</td><td>GPS longitude</td></tr>
+    <tr><td><code>district</code></td><td>VARCHAR(100)</td><td>nullable</td><td>Indian district name</td></tr>
+    <tr><td><code>state</code></td><td>VARCHAR(100)</td><td>nullable</td><td>Indian state name</td></tr>
+    <tr><td><code>created_at</code></td><td>TIMESTAMPTZ</td><td>DEFAULT now()</td><td>When the farm was registered</td></tr>
+  </tbody>
+</table>
+
+<h3>disease_reports</h3>
+<p>Stores AI disease detection results from leaf image analysis.</p>
+<table>
+  <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>id</code></td><td>UUID</td><td>Primary key</td></tr>
+    <tr><td><code>user_id</code></td><td>UUID (FK)</td><td>Which user ran this detection</td></tr>
+    <tr><td><code>predicted_disease</code></td><td>VARCHAR(255)</td><td>The AI's predicted disease name</td></tr>
+    <tr><td><code>confidence</code></td><td>NUMERIC</td><td>Confidence percentage (0-100)</td></tr>
+    <tr><td><code>treatment</code></td><td>TEXT</td><td>Recommended treatment text</td></tr>
+    <tr><td><code>low_confidence</code></td><td>BOOLEAN</td><td>True if confidence was below 60%</td></tr>
+    <tr><td><code>created_at</code></td><td>TIMESTAMPTZ</td><td>When the analysis was performed</td></tr>
+  </tbody>
+</table>
+
+<h3>Other Tables (Phase 1)</h3>
+<table>
+  <thead><tr><th>Table</th><th>Key Columns</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>crop_recommendations</code></td><td>user_id, farm_id, N/P/K/temp/humidity/pH/rainfall, recommended_crops (JSONB)</td><td>Stores crop recommendation history</td></tr>
+    <tr><td><code>irrigation_schedules</code></td><td>user_id, farm_id, crop, schedule (JSONB), next_irrigation</td><td>Generated irrigation schedules</td></tr>
+    <tr><td><code>pest_alerts</code></td><td>farm_id, user_id, alert_type, severity, pest_disease, message</td><td>Weather-based pest/disease alerts</td></tr>
+    <tr><td><code>yield_predictions</code></td><td>user_id, farm_id, crop, predicted_yield_kg, harvest_window_start/end</td><td>Yield estimates with harvest timing</td></tr>
+    <tr><td><code>simplified_advisories</code></td><td>user_id, N/P/K/temp/humidity/pH/rainfall, crop_recommendation, fertilizer_advice</td><td>Simple advisory results</td></tr>
+    <tr><td><code>market_price_history</code></td><td>commodity, state, district, modal/min/max_price, recorded_at</td><td>Historical price data for forecasting</td></tr>
+    <tr><td><code>advisories</code></td><td>farm_id, weather_snapshot (JSONB), rules_triggered (JSONB), advisories_given (JSONB)</td><td>Detailed rule-based advisory results</td></tr>
+    <tr><td><code>market_prices</code></td><td>commodity, state, district, modal/min/max_price, fetched_at</td><td>Cached market price data</td></tr>
+  </tbody>
+</table>
+
+<h2 id="db-relations">4.2 Relationships</h2>
+<p>All relationships use UUID foreign keys with <code>ON DELETE CASCADE</code> (if a user is deleted, all their farms, advisories, etc. are automatically removed).</p>
+<ul>
+  <li><strong>users</strong> → has many → farms, disease_reports, crop_recommendations, irrigation_schedules, pest_alerts, yield_predictions, simplified_advisories</li>
+  <li><strong>farms</strong> → has many → advisories, crop_recommendations, irrigation_schedules, pest_alerts, yield_predictions</li>
+</ul>
+
+<!-- ════════════ CHAPTER 5 ════════════ -->
+<h1 id="backend" class="page-break">5. Backend (Express Server)</h1>
+
+<h2 id="server-config">5.1 Server Configuration</h2>
+
+<p>The server entry point (<code>server/index.js</code>) sets up:</p>
+<table>
+  <thead><tr><th>Feature</th><th>Library</th><th>Configuration</th></tr></thead>
+  <tbody>
+    <tr><td>CORS</td><td><code>cors</code></td><td>Allow all origins (for development). In production, restrict to your frontend domain.</td></tr>
+    <tr><td>Security Headers</td><td><code>helmet</code></td><td>Adds XSS protection, content-type sniffing prevention, etc.</td></tr>
+    <tr><td>Body Parser</td><td><code>express.json()</code></td><td>Parses incoming JSON request bodies.</td></tr>
+    <tr><td>Rate Limiting</td><td><code>express-rate-limit</code></td><td>100 requests per IP per 15 minutes on <code>/api/*</code> routes.</td></tr>
+    <tr><td>Health Check</td><td>—</td><td><code>GET /health</code> → <code>{ status: 'ok' }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Middleware Execution Order</h3>
+<div class="flow">
+  <div class="flow-step">Request In</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">CORS</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Helmet</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">JSON Parser</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Rate Limiter</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Route Handler</div>
+</div>
+
+<h2 id="auth-system">5.2 Authentication System</h2>
+
+<h3>How JWT Authentication Works</h3>
+<p>JWT (JSON Web Token) is a stateless authentication method. Instead of storing sessions on the server, we give the user a signed token that proves their identity.</p>
+
+<div class="flow">
+  <div class="flow-step">1. User sends email + password</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">2. Server verifies password</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">3. Server creates JWT with user ID</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">4. Token sent back to browser</div>
+</div>
+<div class="flow">
+  <div class="flow-step">5. Browser stores token in localStorage</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">6. Every API call includes token in header</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">7. Server verifies token → knows who's asking</div>
+</div>
+
+<h3>Registration Flow</h3>
+<pre><code>POST /api/auth/register
+Body: { "name": "Ravi Kumar", "email": "ravi@example.com", "password": "secret123" }
+
+Backend does:
+1. Validates: name not empty, email format valid, password ≥ 6 chars
+2. Checks if email already exists in database
+3. Hashes password with bcrypt (10 salt rounds)
+4. Inserts new user into 'users' table
+5. Creates JWT token (expires in 7 days)
+6. Returns: { token: "eyJ...", user: { id, name, email, role } }</code></pre>
+
+<h3>Login Flow</h3>
+<pre><code>POST /api/auth/login
+Body: { "email": "ravi@example.com", "password": "secret123" }
+
+Backend does:
+1. Finds user by email in database
+2. Compares password with stored hash using bcrypt
+3. If match → creates JWT token
+4. Returns: { token: "eyJ...", user: { id, name, email, role } }</code></pre>
+
+<h3>Auth Middleware (Protecting Routes)</h3>
+<pre><code>// Every protected route passes through this middleware:
+function authMiddleware(req, res, next) {
+    1. Read 'Authorization' header from request
+    2. Strip 'Bearer ' prefix → extract token
+    3. Verify token signature using JWT_SECRET
+    4. Extract user ID from token payload
+    5. Set req.user = { id, role }
+    6. Call next() → allow the route handler to execute
+    
+    // If token is missing or invalid → return 401 Unauthorized
+}</code></pre>
+
+<h2 id="api-reference">5.3 Complete API Reference</h2>
+
+<h3>Auth Endpoints (Public — No Token Required)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request Body</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/auth/register</code></td><td><code>{ name, email, password }</code></td><td><code>{ token, user: { id, name, email, role } }</code></td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/auth/login</code></td><td><code>{ email, password }</code></td><td><code>{ token, user: { id, name, email, role } }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Farm Endpoints (Private — Token Required)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/farms</code></td><td>Body: <code>{ farm_name, area_acres, soil_type, current_crop, soil_ph?, irrigation_type?, sowing_date?, latitude?, longitude?, district?, state? }</code></td><td>Created farm object</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/farms</code></td><td>—</td><td>Array of user's farms</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/farms/:id</code></td><td>Farm UUID in URL</td><td>Single farm object</td></tr>
+    <tr><td><span class="badge badge-delete">DELETE</span></td><td><code>/api/farms/:id</code></td><td>Farm UUID in URL</td><td><code>{ msg: "Farm removed" }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Advisory Endpoints (Private)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/advisories/simplified</code></td><td>Body: <code>{ nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall }</code></td><td><code>{ crop_recommendation, fertilizer_advice }</code></td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/advisories/history</code></td><td>—</td><td>Array of past advisories</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/advisories/weather?city=X</code></td><td>City name as query param</td><td><code>{ temperature, humidity, rainfall }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Disease Detection Endpoints (Private)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/disease/detect</code></td><td>multipart/form-data with <code>image</code> field (max 5MB, image/* only)</td><td><code>{ disease, confidence, treatment, low_confidence }</code></td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/disease/history</code></td><td>—</td><td>Last 30 detection records</td></tr>
+  </tbody>
+</table>
+
+<h3>Market Endpoints (Private)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/market/prices?state=X&district=Y&commodity=Z</code></td><td>All 3 query params</td><td><code>{ bestMarket, otherMarkets[], fallbackTriggered }</code></td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/market/forecast?commodity=X&state=Y</code></td><td>Both query params</td><td><code>{ currentPrice, trend, forecast[], recommendation }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Crop Recommendation Endpoints (Private)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Request</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/crop-recommend</code></td><td>Body: <code>{ nitrogen, phosphorous, potassium, temperature, humidity, ph, rainfall, soil_type? }</code></td><td><code>{ recommendations: [top 8 crops] }</code></td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/crop-recommend/from-farm/:farmId</code></td><td>Farm UUID in URL</td><td><code>{ recommendations, weather, farm }</code></td></tr>
+  </tbody>
+</table>
+
+<h3>Other Endpoints (Private)</h3>
+<table>
+  <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/irrigation/schedule/:farmId</code></td><td>Generate 28-day irrigation schedule for a farm</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/pest-alerts/all</code></td><td>Scan ALL user farms for pest/disease risks</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/pest-alerts/farm/:farmId</code></td><td>Scan specific farm for alerts</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/api/yield/predict/:farmId</code></td><td>Predict yield and harvest window for a farm</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/soil-labs/search?latitude=X&longitude=Y</code></td><td>Find soil labs by GPS coordinates</td></tr>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/api/soil-labs/search?state=X&district=Y</code></td><td>Find soil labs by state/district</td></tr>
+  </tbody>
+</table>
+
+<h2 id="services">5.4 Backend Services & Business Logic</h2>
+
+<h3>Crop Recommendation Engine</h3>
+<p>Located in <code>services/cropRecommendation.js</code>. Uses a scoring algorithm to match user inputs against 18 Indian crops.</p>
+<pre><code>Algorithm:
+1. For each of the 18 crops (Rice, Wheat, Maize, Cotton, etc.):
+   a. Score Nitrogen: How close is user's N to crop's ideal N range? (0-1 scale)
+   b. Score Phosphorous: same approach (0-1)
+   c. Score Potassium: same (0-1)
+   d. Score Temperature: same (0-1)
+   e. Score Humidity: same (0-1)
+   f. Score pH: same (0-1)
+   g. Score Rainfall: same (0-1)
+   h. Bonus if soil_type matches crop's preferred soils (+1 point)
+
+2. matchPercent = (totalScore / maxScore) × 100
+
+3. Sort all crops by matchPercent DESC
+
+4. Return top 8 crops with: crop name, matchPercent, compatible seasons,
+   ideal conditions, soil types, expected yield per acre</code></pre>
+
+<h3>Irrigation Scheduling Engine</h3>
+<p>Located in <code>services/irrigationScheduler.js</code>. Generates a 28-day watering plan.</p>
+<pre><code>Algorithm:
+1. Look up crop's water needs (mm/day) for current growth stage
+   - Growth stage is calculated from sowing_date:
+     <30 days = seedling, <60 = vegetative, <90 = flowering, ≥90 = maturity
+
+2. Adjust for soil retention factor:
+   - Clay holds water well (factor 1.3) → needs less frequent watering
+   - Sandy soil drains fast (factor 0.6) → needs more frequent
+
+3. Adjust for irrigation efficiency:
+   - Drip (90% efficient) → least water waste
+   - Flood (50% efficient) → needs much more water
+
+4. Adjust for live weather:
+   - Temperature > 35°C → +30% water need
+   - Humidity > 80% → -15% water need
+   - Rain forecast > 20mm → -50% water need (skip irrigation)
+
+5. Calculate interval (every 2-7 days based on effective need)
+
+6. Generate 28 daily entries: date, water amount, "scheduled" or "skip"</code></pre>
+
+<h3>Pest Alert Service</h3>
+<p>Located in <code>services/pestAlertService.js</code>. Contains 34 weather-based pest/disease rules.</p>
+<pre><code>Rule Examples:
+- Rice + Humidity > 85% + Temp 25-35°C → "Rice Blast" (HIGH severity)
+- Cotton + Rainfall > 30mm            → "Bollworm Risk" (CRITICAL)
+- Tomato + Humidity > 75% + Temp < 20°C → "Late Blight" (HIGH)
+- Any Crop + Temp > 40°C              → "Heat Stress" (CRITICAL)
+- Any Crop + Rainfall > 50mm          → "Waterlogging" (HIGH)
+
+Each rule has: condition function, severity level, pest/disease name,
+              advisory message, and applicable crop(s)</code></pre>
+
+<h3>Yield Predictor</h3>
+<p>Located in <code>services/yieldPredictor.js</code>. Estimates harvest quantity using multiplicative factors.</p>
+<pre><code>Algorithm:
+Start with yieldFactor = 1.0, then multiply by:
+
+1. Soil type factor: e.g., Rice on Alluvial soil = 1.1, on Sandy = 0.7
+2. pH factor: ideal 5.5-7.5 = 1.0, extreme values = 0.7
+3. Irrigation factor: Drip = 1.1, Sprinkler = 1.0, Rainfed = 0.65
+4. Weather factor: Extreme heat = 0.7, Moderate = 0.85
+5. Season factor: Right sowing season = 1.0, Wrong = 0.75
+
+Final: predicted_yield = optimal_yield × yieldFactor × farm_area
+Confidence: HIGH if yieldFactor > 0.85, else MEDIUM</code></pre>
+
+<h3>Price Forecaster</h3>
+<p>Located in <code>services/priceForecaster.js</code>. Uses moving averages for 4-week price predictions.</p>
+<pre><code>Algorithm:
+1. Load historical prices from database (last 60 records)
+   - If < 5 records, use seasonal baseline prices (15 commodities built-in)
+
+2. Calculate Short-term Moving Average (3-point) = recent trend
+3. Calculate Long-term Moving Average (7-point) = overall trend
+
+4. Determine trend:
+   - Short MA > Long MA × 1.03 → "rising"
+   - Short MA < Long MA × 0.97 → "falling"
+   - Otherwise → "stable"
+
+5. Forecast 4 weeks: extrapolate from recent change, dampened over time
+
+6. Sell/Hold recommendation:
+   - Falling + current > forecast avg → "Sell now"
+   - Rising → "Hold for better prices"
+   - Stable → compare to short-term average</code></pre>
+
+<!-- ════════════ CHAPTER 6 ════════════ -->
+<h1 id="frontend" class="page-break">6. Frontend (React App)</h1>
+
+<h2 id="frontend-arch">6.1 App Architecture & Routing</h2>
+
+<h3>How the React App Is Organized</h3>
+<p>React uses a component-based architecture. The entire UI is built from reusable components — small building blocks (like a button or a card) that are composed into larger components (like a page).</p>
+
+<div class="flow">
+  <div class="flow-step">main.jsx</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">App.jsx</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">AppLayout</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Navbar + Page</div>
+</div>
+
+<h3>Routing Table</h3>
+<p><code>App.jsx</code> uses React Router to map URL paths to page components:</p>
+<table>
+  <thead><tr><th>URL Path</th><th>Component</th><th>Navbar?</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>/</code></td><td>Login</td><td>No</td><td>Login page (default landing)</td></tr>
+    <tr><td><code>/login</code></td><td>Login</td><td>No</td><td>Login page</td></tr>
+    <tr><td><code>/register</code></td><td>Register</td><td>No</td><td>Create account page</td></tr>
+    <tr><td><code>/dashboard</code></td><td>Dashboard</td><td>Yes</td><td>Main overview with feature cards and tips</td></tr>
+    <tr><td><code>/farms</code></td><td>Farms</td><td>Yes</td><td>Add/view/delete farms</td></tr>
+    <tr><td><code>/advisory</code></td><td>SimplifiedAdvisory</td><td>Yes</td><td>Soil NPK/pH crop recommendation</td></tr>
+    <tr><td><code>/crop-recommend</code></td><td>CropRecommendation</td><td>Yes</td><td>AI crop matching engine</td></tr>
+    <tr><td><code>/disease-detection</code></td><td>DiseaseDetection</td><td>Yes</td><td>Upload leaf photo for AI analysis</td></tr>
+    <tr><td><code>/disease-history</code></td><td>DiseaseHistory</td><td>Yes</td><td>Past detection records</td></tr>
+    <tr><td><code>/irrigation</code></td><td>IrrigationScheduler</td><td>Yes</td><td>Smart watering schedule</td></tr>
+    <tr><td><code>/pest-alerts</code></td><td>PestAlerts</td><td>Yes</td><td>Weather-based pest warnings</td></tr>
+    <tr><td><code>/yield-prediction</code></td><td>YieldPrediction</td><td>Yes</td><td>Harvest estimates</td></tr>
+    <tr><td><code>/market-prices</code></td><td>MarketPrices</td><td>Yes</td><td>Live Agmarknet commodity prices</td></tr>
+    <tr><td><code>/price-forecast</code></td><td>PriceForecast</td><td>Yes</td><td>Price trend analysis and 4-week forecast</td></tr>
+    <tr><td><code>/farm-map</code></td><td>FarmMap</td><td>Yes</td><td>Interactive map of all farms</td></tr>
+    <tr><td><code>/reports</code></td><td>ReportExport</td><td>Yes</td><td>Export data as PDF/CSV</td></tr>
+    <tr><td><code>/soil-labs</code></td><td>SoilLabLocator</td><td>Yes</td><td>Find nearby soil testing labs</td></tr>
+    <tr><td><code>/roadmap</code></td><td>Roadmap</td><td>Yes</td><td>Platform future vision</td></tr>
+  </tbody>
+</table>
+
+<h3>Auth Protection</h3>
+<p>There is no <code>&lt;PrivateRoute&gt;</code> wrapper component. Instead, authentication is enforced via the <strong>Axios response interceptor</strong>: if any API call returns a <code>401 Unauthorized</code> response, the interceptor automatically clears localStorage and redirects to <code>/login</code>. Individual pages also check for a token on mount and redirect if missing.</p>
+
+<h3>Axios Instance Configuration</h3>
+<pre><code>// api/axiosInstance.js
+const api = axios.create({
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000'
+});
+
+// Request interceptor: attach JWT to every request
+api.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
+
+// Response interceptor: handle 401
+api.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        }
+        return Promise.reject(error);
+    }
+);</code></pre>
+
+<h2 id="design-system">6.2 Design System</h2>
+
+<p>All styles live in <code>src/index.css</code>. The design system uses CSS custom properties (variables) and reusable utility classes.</p>
+
+<h3>Color Palette</h3>
+<table>
+  <thead><tr><th>Variable</th><th>Value</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>--color-primary</code></td><td style="background:#065f46;color:white;padding:2px 8px;border-radius:4px;">#065f46</td><td>Main brand green (headings, accents)</td></tr>
+    <tr><td><code>--color-primary-light</code></td><td style="background:#059669;color:white;padding:2px 8px;border-radius:4px;">#059669</td><td>Interactive elements, links</td></tr>
+    <tr><td><code>--color-accent</code></td><td style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;">#d97706</td><td>Amber accent for highlights</td></tr>
+    <tr><td><code>--color-bg</code></td><td style="background:#f0f4f3;padding:2px 8px;border-radius:4px;">#f0f4f3</td><td>Page background</td></tr>
+    <tr><td><code>--color-text</code></td><td style="background:#1a2e2a;color:white;padding:2px 8px;border-radius:4px;">#1a2e2a</td><td>Primary text color</td></tr>
+    <tr><td><code>--color-border</code></td><td style="background:#d4ddd9;padding:2px 8px;border-radius:4px;">#d4ddd9</td><td>Borders and dividers</td></tr>
+  </tbody>
+</table>
+
+<h3>Key CSS Classes</h3>
+<table>
+  <thead><tr><th>Class</th><th>What It Does</th><th>Where Used</th></tr></thead>
+  <tbody>
+    <tr><td><code>.glass-card</code></td><td>White card with 85% opacity, blur backdrop, subtle shadow. Hover elevates.</td><td>Every card/panel on every page</td></tr>
+    <tr><td><code>.gradient-primary</code></td><td>Green gradient background (3-stop emerald)</td><td>Logo icon, buttons, header elements</td></tr>
+    <tr><td><code>.gradient-hero</code></td><td>Darker green gradient for full panels</td><td>Login/Register hero section</td></tr>
+    <tr><td><code>.btn-primary</code></td><td>Green gradient button with hover lift effect</td><td>Primary action buttons everywhere</td></tr>
+    <tr><td><code>.btn-secondary</code></td><td>White outlined button with green text</td><td>Secondary actions</td></tr>
+    <tr><td><code>.input-field</code></td><td>Full-width input with green focus ring</td><td>All form inputs</td></tr>
+    <tr><td><code>.page-title</code></td><td>Large bold heading (1.625rem, weight 800)</td><td>Top of every page</td></tr>
+    <tr><td><code>.page-subtitle</code></td><td>Smaller muted description text</td><td>Below page titles</td></tr>
+    <tr><td><code>.page-content</code></td><td>Max 1280px centered container with padding</td><td>Wraps every page's content</td></tr>
+    <tr><td><code>.badge-success</code></td><td>Green pill badge</td><td>Status indicators</td></tr>
+    <tr><td><code>.skeleton</code></td><td>Shimmer loading animation placeholder</td><td>Loading states</td></tr>
+  </tbody>
+</table>
+
+<h3>Layout Architecture</h3>
+<pre><code>┌──────────────────────────────────────────────────┐
+│  Header Bar (64px height, sticky top)             │
+│  [☰ Menu] [🌿 KrishiMitra] ........... [EN▾] [👤] [Logout] │
+├──────────┬───────────────────────────────────────┤
+│ Sidebar  │  Page Content                         │
+│ (260px)  │  ┌─────────────────────────────────┐  │
+│          │  │ .page-content (max 1280px)      │  │
+│ Overview │  │                                 │  │
+│ ● Dash   │  │  page-title                    │  │
+│ ● Farms  │  │  page-subtitle                 │  │
+│          │  │                                 │  │
+│ Crop Int │  │  ┌──────┐ ┌──────┐ ┌──────┐    │  │
+│ ● Advis  │  │  │glass │ │glass │ │glass │    │  │
+│ ● CropR  │  │  │-card │ │-card │ │-card │    │  │
+│ ● Diseas │  │  └──────┘ └──────┘ └──────┘    │  │
+│ ● Pest   │  │                                 │  │
+│          │  └─────────────────────────────────┘  │
+│ Farm Mgmt│                                       │
+│ ● Irrig  │  On mobile: sidebar becomes overlay   │
+│ ● Yield  │  triggered by hamburger menu          │
+│ ● Map    │                                       │
+│          │                                       │
+│ Market   │                                       │
+│ ● Prices │                                       │
+│ ● Foreca │                                       │
+│          │                                       │
+│ Tools    │                                       │
+│ ● Labs   │                                       │
+│ ● Histor │                                       │
+│ ● Report │                                       │
+│ ● Roadma │                                       │
+│          │                                       │
+│ ──────── │                                       │
+│ Need Help│                                       │
+│ tip box  │                                       │
+└──────────┴───────────────────────────────────────┘</code></pre>
+
+<h2 id="pages-detail">6.3 Page-by-Page Breakdown</h2>
+
+<h3>Login & Register Pages</h3>
+<p>Split-screen layout: left 55% is a gradient hero panel with branding and feature highlights; right 45% is the form. On mobile, the hero panel hides and only the form is shown.</p>
+
+<h3>Dashboard</h3>
+<p>The main landing page after login. Shows a greeting (Good morning/afternoon/evening + user name), a 3-column grid of 11 feature cards (each links to its respective page), a Government Schemes widget, and a Seasonal Farming Tips section.</p>
+
+<h3>Farms (CRUD)</h3>
+<p>Expandable "Add New Farm" form at the top. Below it, a grid of farm cards showing name, crop, area, soil, pH, irrigation, sowing date, and coordinates. Each card has a delete button. Form fields: farm name, area (acres), soil type (dropdown), current crop (dropdown), soil pH, irrigation type, sowing date, previous crop, latitude/longitude, district, state.</p>
+
+<h3>Crop Advisory (SimplifiedAdvisory)</h3>
+<p>Two sections: (1) Input form with NPK sliders/inputs, pH, and weather data (temperature, humidity, rainfall). Has an "Auto-fill" button that fetches live weather. (2) Results panel showing a Soil Health Score (Good/Fair/Poor based on NPK ranges), the recommended crop, and fertilizer advice. Includes tabs for "Latest Result" and "History".</p>
+
+<h3>Crop Recommendation</h3>
+<p>Two tabs: "Manual Input" (enter N/P/K/temp/humidity/pH/rainfall manually) and "From My Farm" (select a registered farm to auto-populate). Results show top 8 matching crops with match percentage, compatible seasons, and expected yield.</p>
+
+<h3>Disease Detection</h3>
+<p>Drag-and-drop image upload area for leaf photos. Supports JPG, PNG, WEBP up to 5MB. After analysis, shows detected disease name, confidence score (with color-coded badge), and recommended treatment. Below the main area is a "How Disease Detection Works" section explaining the 3-step process. Links to Disease History page.</p>
+
+<h3>Irrigation Scheduler</h3>
+<p>Farm dropdown selector. Generates a 28-day schedule showing: Schedule Summary (growth stage, water need/day, interval, estimated harvest date), Weather Advisory with current conditions, and a day-by-day schedule table with water amounts and skip/scheduled status.</p>
+
+<h3>Pest Alerts</h3>
+<p>Farm multi-select (or "All My Farms"). Shows severity-color-coded alert cards with pest/disease name, type (Fungal/Bacterial/Viral/Pest/Abiotic), advisory message, and weather snapshot used for the evaluation.</p>
+
+<h3>Yield Prediction</h3>
+<p>Farm dropdown. Shows predicted yield in kg, yield per acre, percentage of optimal, confidence level, impact factors breakdown (soil, pH, irrigation, weather, season), harvest window dates, and a visual comparison bar (Minimum ↔ Your Prediction ↔ Optimal).</p>
+
+<h3>Market Prices</h3>
+<p>Search interface with state, district, and commodity dropdowns. Shows results in a card grid with min/max/modal prices per quintal. Summary stats at top (best price, price range, markets found). Agmarknet data source with fallback notice.</p>
+
+<h3>Price Forecast</h3>
+<p>Commodity + State selectors. Shows current price, trend direction (rising/falling/stable), short & long-term averages, a trend chart (historical + 4-week forecast), Sell/Hold recommendation with explanation, and weekly forecast breakdown.</p>
+
+<h3>Farm Map</h3>
+<p>Interactive Leaflet.js map showing all farms with lat/lon as markers. Sidebar listing farms. Click a farm to see popup with details. Farms without coordinates are listed separately with a reminder to add them.</p>
+
+<h3>Reports & Export</h3>
+<p>Four export sections: Farm Details, Crop Advisories, Disease Detections, Yield Predictions. Each has CSV and PDF download buttons. Plus a "Complete Farm Report" button that generates a comprehensive PDF with all data.</p>
+
+<h3>Soil Lab Locator</h3>
+<p>Two search modes: GPS-based (uses device location + Haversine distance) and State/District selection. Results show lab name, type (Govt/Private), distance, address, phone, fee, turnaround time, and services. Includes a "How to Collect Sample" guide and Google Maps links.</p>
+
+<h2 id="i18n">6.4 Internationalization (i18n)</h2>
+<p>The entire UI supports three languages, switchable via a dropdown in the header:</p>
+<table>
+  <thead><tr><th>Code</th><th>Language</th><th>Script</th></tr></thead>
+  <tbody>
+    <tr><td><code>en</code></td><td>English</td><td>Latin</td></tr>
+    <tr><td><code>hi</code></td><td>Hindi</td><td>Devanagari (हिन्दी)</td></tr>
+    <tr><td><code>te</code></td><td>Telugu</td><td>Telugu script (తెలుగు)</td></tr>
+  </tbody>
+</table>
+
+<p><strong>How it works:</strong> All user-facing strings in JSX files are wrapped in <code>t('key')</code> calls from react-i18next. The translation strings for all three languages are defined inline in <code>src/i18n.js</code> (~1290 lines, ~350 keys per language). The Roadmap page is intentionally excluded from translation.</p>
+<pre><code>// Example: In a JSX component
+import { useTranslation } from 'react-i18next';
+
+function MyComponent() {
+    const { t } = useTranslation();
+    return &lt;h1&gt;{t('Dashboard')}&lt;/h1&gt;; 
+    // Renders "Dashboard" in English
+    // Renders "डैशबोर्ड" in Hindi
+    // Renders "డాష్‌బోర్డ్" in Telugu
+}</code></pre>
+
+<!-- ════════════ CHAPTER 7 ════════════ -->
+<h1 id="ml" class="page-break">7. ML Service (Disease Detection)</h1>
+
+<h2>Overview</h2>
+<p>A standalone Python microservice built with FastAPI that performs plant disease classification using a pre-trained TensorFlow deep learning model.</p>
+
+<h2>Model Details</h2>
+<table>
+  <thead><tr><th>Property</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Architecture</td><td>MobileNetV2 (Convolutional Neural Network)</td></tr>
+    <tr><td>Input Size</td><td>224 × 224 pixels, RGB</td></tr>
+    <tr><td>Output</td><td>15 class probabilities (softmax)</td></tr>
+    <tr><td>Model Format</td><td>Keras H5 (.h5 file)</td></tr>
+    <tr><td>Model File Size</td><td>~25 MB</td></tr>
+    <tr><td>Confidence threshold</td><td>60% (below = "Uncertain" result)</td></tr>
+  </tbody>
+</table>
+
+<h2>Supported Diseases (15 Classes)</h2>
+<table>
+  <thead><tr><th>#</th><th>Class Name</th><th>Crop</th><th>Disease</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Pepper__bell___Bacterial_spot</td><td>Bell Pepper</td><td>Bacterial Spot</td></tr>
+    <tr><td>2</td><td>Pepper__bell___healthy</td><td>Bell Pepper</td><td>Healthy</td></tr>
+    <tr><td>3</td><td>Potato___Early_blight</td><td>Potato</td><td>Early Blight</td></tr>
+    <tr><td>4</td><td>Potato___Late_blight</td><td>Potato</td><td>Late Blight</td></tr>
+    <tr><td>5</td><td>Potato___healthy</td><td>Potato</td><td>Healthy</td></tr>
+    <tr><td>6</td><td>Tomato_Bacterial_spot</td><td>Tomato</td><td>Bacterial Spot</td></tr>
+    <tr><td>7</td><td>Tomato_Early_blight</td><td>Tomato</td><td>Early Blight</td></tr>
+    <tr><td>8</td><td>Tomato_Late_blight</td><td>Tomato</td><td>Late Blight</td></tr>
+    <tr><td>9</td><td>Tomato_Leaf_Mold</td><td>Tomato</td><td>Leaf Mold</td></tr>
+    <tr><td>10</td><td>Tomato_Septoria_leaf_spot</td><td>Tomato</td><td>Septoria Leaf Spot</td></tr>
+    <tr><td>11</td><td>Tomato_Spider_mites</td><td>Tomato</td><td>Spider Mites</td></tr>
+    <tr><td>12</td><td>Tomato__Target_Spot</td><td>Tomato</td><td>Target Spot</td></tr>
+    <tr><td>13</td><td>Tomato__YellowLeaf_Curl_Virus</td><td>Tomato</td><td>Yellow Leaf Curl Virus</td></tr>
+    <tr><td>14</td><td>Tomato__Tomato_mosaic_virus</td><td>Tomato</td><td>Mosaic Virus</td></tr>
+    <tr><td>15</td><td>Tomato_healthy</td><td>Tomato</td><td>Healthy</td></tr>
+  </tbody>
+</table>
+
+<h2>API Endpoints</h2>
+<table>
+  <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-get">GET</span></td><td><code>/health</code></td><td>Returns model and class loading status</td></tr>
+    <tr><td><span class="badge badge-post">POST</span></td><td><code>/predict</code></td><td>Accepts image file, returns disease prediction</td></tr>
+  </tbody>
+</table>
+
+<h2>Prediction Pipeline</h2>
+<div class="flow">
+  <div class="flow-step">1. Receive Image</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">2. Convert to RGB</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">3. Resize to 224×224</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">4. Normalize [0,1]</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">5. Model Predict</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">6. Get Top Class</div>
+</div>
+
+<pre><code>def preprocess_image(image_bytes):
+    img = Image.open(io.BytesIO(image_bytes)).convert('RGB')
+    img = img.resize((224, 224))
+    img_array = np.array(img) / 255.0   # Normalize pixel values to 0-1
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    return img_array  # Shape: (1, 224, 224, 3)
+
+# Prediction
+predictions = model.predict(processed_img)     # Shape: (1, 15) — probabilities
+predicted_idx = np.argmax(predictions[0])       # Index of highest probability
+confidence = predictions[0][predicted_idx] * 100  # Convert to percentage
+
+# If confidence < 60% → return "Uncertain" with advice to retake photo
+# If confidence ≥ 60% → return disease name + treatment recommendation</code></pre>
+
+<h2>Treatment Mapping</h2>
+<p>Each of the 15 classes has a hardcoded treatment recommendation. For example:</p>
+<ul>
+  <li><strong>Tomato Late Blight</strong>: "Apply specific fungicides immediately. Destroy heavily infected plants to stop spread."</li>
+  <li><strong>Potato Early Blight</strong>: "Apply fungicides like chlorothalonil or mancozeb. Practice crop rotation."</li>
+  <li><strong>Tomato Spider Mites</strong>: "Spray with insecticidal soap or neem oil. Introduce predatory mites."</li>
+</ul>
+
+<h2>Docker Deployment</h2>
+<pre><code># Build the Docker image
+docker build -t krishimitra-ml .
+
+# Run the container
+docker run -p 8000:8000 krishimitra-ml
+
+# The service will be available at http://localhost:8000</code></pre>
+
+<!-- ════════════ CHAPTER 8 ════════════ -->
+<h1 id="external" class="page-break">8. External APIs Used</h1>
+
+<table>
+  <thead><tr><th>API</th><th>Provider</th><th>Used For</th><th>How to Get Key</th><th>Free Tier</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>OpenWeatherMap</strong></td>
+      <td>openweathermap.org</td>
+      <td>Current weather (temp, humidity, rainfall) for farm locations. Used by irrigation, pest alerts, yield, and crop recommendation.</td>
+      <td>Sign up → API Keys section → Copy key</td>
+      <td>60 calls/minute, 1M calls/month</td>
+    </tr>
+    <tr>
+      <td><strong>Agmarknet</strong></td>
+      <td>data.gov.in</td>
+      <td>Real-time agricultural commodity prices across 7,000+ Indian mandis (markets).</td>
+      <td>Register at data.gov.in → Request API key for the commodity prices dataset</td>
+      <td>Generous free tier</td>
+    </tr>
+    <tr>
+      <td><strong>OpenWeatherMap Geocoding</strong></td>
+      <td>openweathermap.org</td>
+      <td>Convert district/state names to latitude/longitude when farm doesn't have GPS coordinates.</td>
+      <td>Same key as above</td>
+      <td>Included in free tier</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ════════════ CHAPTER 9 ════════════ -->
+<h1 id="dataflow" class="page-break">9. Data Flow Diagrams</h1>
+
+<h2>Disease Detection Flow</h2>
+<div class="flow">
+  <div class="flow-step">User uploads leaf image</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">React sends to /api/disease/detect</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Express checks JWT</div>
+</div>
+<div class="flow">
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Multer processes upload (max 5MB)</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Express health-checks ML service</div>
+</div>
+<div class="flow">
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Express proxies image to FastAPI /predict</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">TensorFlow model inference</div>
+</div>
+<div class="flow">
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Result + treatment returned</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Saved to disease_reports table</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Displayed in UI</div>
+</div>
+
+<h2>Crop Recommendation Flow</h2>
+<div class="flow">
+  <div class="flow-step">User enters NPK + pH</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">OR selects a farm</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Backend fetches live weather</div>
+</div>
+<div class="flow">
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">18 crops scored on 7 parameters</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Top 8 returned as % match</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Saved + displayed</div>
+</div>
+
+<h2>Market Prices Flow</h2>
+<div class="flow">
+  <div class="flow-step">User selects commodity+state+district</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Backend calls Agmarknet API</div>
+</div>
+<div class="flow">
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Try district filter first</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Fallback to state-wide if empty</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Parse + rank results</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Show best market + others</div>
+</div>
+
+<!-- ════════════ CHAPTER 10 ════════════ -->
+<h1 id="security" class="page-break">10. Security & Best Practices</h1>
+
+<table>
+  <thead><tr><th>Measure</th><th>Implementation</th><th>Why It Matters</th></tr></thead>
+  <tbody>
+    <tr><td>Password Hashing</td><td>bcrypt with 10 salt rounds</td><td>Even if database is leaked, passwords cannot be reversed.</td></tr>
+    <tr><td>JWT Authentication</td><td>Signed tokens with secret key, 7-day expiry</td><td>Stateless auth. No server-side sessions to manage.</td></tr>
+    <tr><td>Helmet Security Headers</td><td>XSS, CSP, content-type sniffing protection</td><td>Prevents many common web attacks automatically.</td></tr>
+    <tr><td>Rate Limiting</td><td>100 requests per IP per 15 minutes</td><td>Prevents brute-force attacks and API abuse.</td></tr>
+    <tr><td>Input Validation</td><td>express-validator on auth routes</td><td>Prevents SQL injection and malformed data.</td></tr>
+    <tr><td>SQL Parameterized Queries</td><td>All DB queries use <code>$1, $2</code> placeholders</td><td>Prevents SQL injection attacks.</td></tr>
+    <tr><td>File Upload Limits</td><td>Multer: 5MB max, image MIME types only</td><td>Prevents malicious file uploads.</td></tr>
+    <tr><td>User Scoping</td><td>All queries filter by <code>user_id</code></td><td>Users can only see their own data.</td></tr>
+    <tr><td>CORS</td><td>Currently open (*) for development</td><td>Should be restricted to frontend domain in production.</td></tr>
+    <tr><td>Environment Variables</td><td>Secrets in .env file, not in code</td><td>Credentials never committed to version control.</td></tr>
+  </tbody>
+</table>
+
+<!-- ════════════ CHAPTER 11 ════════════ -->
+<h1 id="deployment">11. Deployment Guide</h1>
+
+<h2>Recommended Deployment Architecture</h2>
+<table>
+  <thead><tr><th>Component</th><th>Recommended Host</th><th>Free Tier?</th></tr></thead>
+  <tbody>
+    <tr><td>Frontend (React)</td><td>Vercel, Netlify, or Cloudflare Pages</td><td>Yes</td></tr>
+    <tr><td>Backend (Express)</td><td>Render, Railway, or Fly.io</td><td>Yes (with limits)</td></tr>
+    <tr><td>Database (PostgreSQL)</td><td>Supabase or Neon</td><td>Yes (500MB–1GB)</td></tr>
+    <tr><td>ML Service (FastAPI)</td><td>Render (Docker), Railway, or Fly.io</td><td>Yes (with limits)</td></tr>
+  </tbody>
+</table>
+
+<h2>Frontend Deployment (Vercel)</h2>
+<pre><code># 1. Push your code to GitHub
+
+# 2. Go to vercel.com → Import Project → Select your repo
+
+# 3. Set these settings:
+   Root Directory: KrishiMitra/client
+   Build Command: npm run build
+   Output Directory: dist
+   
+# 4. Add Environment Variable:
+   VITE_API_URL = https://your-backend-url.onrender.com
+
+# 5. Deploy</code></pre>
+
+<h2>Backend Deployment (Render)</h2>
+<pre><code># 1. Go to render.com → New Web Service → Connect GitHub repo
+
+# 2. Set these settings:
+   Root Directory: KrishiMitra/server
+   Build Command: npm install
+   Start Command: node index.js
+
+# 3. Add Environment Variables:
+   DATABASE_URL = your_supabase_connection_string
+   JWT_SECRET = your_secret
+   OPENWEATHER_API_KEY = your_key
+   ML_SERVICE_URL = https://your-ml-service.onrender.com
+   AGMARKNET_API_KEY = your_key
+
+# 4. Deploy</code></pre>
+
+<h2>ML Service Deployment (Render with Docker)</h2>
+<pre><code># 1. Go to render.com → New Web Service → Connect GitHub repo
+
+# 2. Set these settings:
+   Root Directory: KrishiMitra/ml_service
+   Environment: Docker
+   
+# The Dockerfile handles everything. Be aware:
+# - TensorFlow makes the Docker image ~2GB
+# - First cold start may take 30-60 seconds
+# - Free tier services spin down after inactivity
+
+# 3. Deploy</code></pre>
+
+<div class="box box-warn">
+  <div class="box-title">Important Production Changes</div>
+  <ul>
+    <li>Restrict CORS to only allow your frontend domain</li>
+    <li>Use a strong, unique JWT_SECRET (32+ random characters)</li>
+    <li>Set NODE_ENV=production for Express optimizations</li>
+    <li>Consider connection pooling for the database</li>
+    <li>Set up monitoring and logging (e.g., Sentry for error tracking)</li>
+  </ul>
+</div>
+
+<!-- ════════════ END ════════════ -->
+<div style="text-align:center; margin:60px 0 40px; padding:30px; border-top:3px solid var(--green);">
+  <div style="font-size:32px; margin-bottom:8px;">🌾</div>
+  <h2 style="border:none; margin:0; color:var(--green);">KrishiMitra</h2>
+  <p style="color:var(--muted); margin:4px 0 0;">AI-Powered Smart Farming Platform<br>Complete Project Documentation — End</p>
+</div>
+
+</div><!-- .content -->
+</body>
+</html>
